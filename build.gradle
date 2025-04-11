@@ -1,0 +1,77 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.4.4'
+    id 'io.spring.dependency-management' version '1.1.7'
+    id 'org.graalvm.buildtools.native' version '0.10.6'
+    id "org.jooq.jooq-codegen-gradle" version "3.20.3"
+}
+
+group = 'com.marcato'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    //Spring Boot
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-jooq'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    //Spring Security
+    implementation "org.springframework.boot:spring-boot-starter-security"
+
+    //jOOQ
+    implementation 'org.jooq:jooq:3.20.3'
+    implementation 'org.jooq:jooq-meta:3.20.3'
+    implementation 'org.jooq:jooq-codegen:3.20.3'
+    implementation "org.jooq:jooq-postgres-extensions:3.20.3"
+    //UUID v7
+    implementation 'com.fasterxml.uuid:java-uuid-generator:5.1.0'
+
+    jooqCodegen 'org.postgresql:postgresql:42.7.5'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+jooq {
+    configuration {
+        jdbc{
+            driver = 'org.postgresql.Driver'
+            url = 'jdbc:postgresql://localhost:5432/erp_marcato'
+            user = 'postgres'
+            password = 'sukhoisu57'
+        }
+        generator{
+            database {
+                name = 'org.jooq.meta.postgres.PostgresDatabase'
+                includes = '.*'
+                inputSchema = 'app_db'
+            }
+            generate{
+                pojos = true
+                daos = true
+                records = true
+                tables = true
+            }
+            target{
+                packageName = 'com.marcato.springmarcatoerp.entity'
+                directory = "$projectDir/src/main/java"
+            }
+        }
+    }
+
+}
+
+
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
