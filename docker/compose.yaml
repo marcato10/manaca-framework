@@ -1,0 +1,47 @@
+services:
+  proxy:
+    image: nginx
+    volumes:
+      - type: bind
+        source: ./proxy/nginx.conf
+        target: /etc/nginx/nginx.conf
+        read_only: true
+    ports:
+      - "8088:80"
+      - "5432:5432"
+    networks:
+      - frontend
+  db:
+    image: postgres:15
+    restart: always
+    user: postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=erp_marcato
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=sukhoisu57
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d erp_marcato"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    command: ["postgres", "-c", "log_statement=all"]
+
+networks:
+  frontend:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.host_binding_ipv4: "127.0.0.1"
+  backend:
+    driver: bridge
+    # internal: true # Considere tornar a rede backend interna
+    ipam:
+      driver: default
+      config:
+        - subnet: "192.168.0.0/24"
+
+volumes:
+  db-data:
