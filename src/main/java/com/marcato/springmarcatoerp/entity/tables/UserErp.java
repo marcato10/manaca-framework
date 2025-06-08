@@ -4,11 +4,8 @@
 package com.marcato.springmarcatoerp.entity.tables;
 
 
-import com.marcato.springmarcatoerp.entity.AppDb;
+import com.marcato.springmarcatoerp.entity.ErpMarcato;
 import com.marcato.springmarcatoerp.entity.Keys;
-import com.marcato.springmarcatoerp.entity.tables.Company.CompanyPath;
-import com.marcato.springmarcatoerp.entity.tables.CompanyDepartmentAddress.CompanyDepartmentAddressPath;
-import com.marcato.springmarcatoerp.entity.tables.Employees.EmployeesPath;
 import com.marcato.springmarcatoerp.entity.tables.records.UserErpRecord;
 
 import java.time.OffsetDateTime;
@@ -19,14 +16,10 @@ import java.util.UUID;
 
 import org.jooq.Condition;
 import org.jooq.Field;
-import org.jooq.ForeignKey;
 import org.jooq.Identity;
-import org.jooq.InverseForeignKey;
 import org.jooq.Name;
-import org.jooq.Path;
 import org.jooq.PlainSQL;
 import org.jooq.QueryPart;
-import org.jooq.Record;
 import org.jooq.SQL;
 import org.jooq.Schema;
 import org.jooq.Select;
@@ -49,9 +42,9 @@ public class UserErp extends TableImpl<UserErpRecord> {
     private static final long serialVersionUID = 1L;
 
     /**
-     * The reference instance of <code>app_db.user_erp</code>
+     * The reference instance of <code>erp_marcato.usererp</code>
      */
-    public static final UserErp USER_ERP = new UserErp();
+    public static final UserErp USERERP = new UserErp();
 
     /**
      * The class holding records for this type
@@ -62,24 +55,29 @@ public class UserErp extends TableImpl<UserErpRecord> {
     }
 
     /**
-     * The column <code>app_db.user_erp.id</code>.
+     * The column <code>erp_marcato.usererp.id</code>.
      */
     public final TableField<UserErpRecord, Integer> ID = createField(DSL.name("id"), SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
-     * The column <code>app_db.user_erp.keycloak_uuid</code>.
+     * The column <code>erp_marcato.usererp.user_uuid</code>.
      */
-    public final TableField<UserErpRecord, UUID> KEYCLOAK_UUID = createField(DSL.name("keycloak_uuid"), SQLDataType.UUID.nullable(false), this, "");
+    public final TableField<UserErpRecord, UUID> USER_UUID = createField(DSL.name("user_uuid"), SQLDataType.UUID.nullable(false), this, "");
 
     /**
-     * The column <code>app_db.user_erp.created_at</code>.
+     * The column <code>erp_marcato.usererp.created_at</code>.
      */
     public final TableField<UserErpRecord, OffsetDateTime> CREATED_AT = createField(DSL.name("created_at"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).defaultValue(DSL.field(DSL.raw("CURRENT_TIMESTAMP"), SQLDataType.TIMESTAMPWITHTIMEZONE)), this, "");
 
     /**
-     * The column <code>app_db.user_erp.updated_at</code>.
+     * The column <code>erp_marcato.usererp.username</code>.
      */
-    public final TableField<UserErpRecord, OffsetDateTime> UPDATED_AT = createField(DSL.name("updated_at"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).defaultValue(DSL.field(DSL.raw("CURRENT_TIMESTAMP"), SQLDataType.TIMESTAMPWITHTIMEZONE)), this, "");
+    public final TableField<UserErpRecord, String> USERNAME = createField(DSL.name("username"), SQLDataType.VARCHAR(20), this, "");
+
+    /**
+     * The column <code>erp_marcato.usererp.full_name</code>.
+     */
+    public final TableField<UserErpRecord, String> FULL_NAME = createField(DSL.name("full_name"), SQLDataType.VARCHAR(255), this, "");
 
     private UserErp(Name alias, Table<UserErpRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
@@ -90,62 +88,29 @@ public class UserErp extends TableImpl<UserErpRecord> {
     }
 
     /**
-     * Create an aliased <code>app_db.user_erp</code> table reference
+     * Create an aliased <code>erp_marcato.usererp</code> table reference
      */
     public UserErp(String alias) {
-        this(DSL.name(alias), USER_ERP);
+        this(DSL.name(alias), USERERP);
     }
 
     /**
-     * Create an aliased <code>app_db.user_erp</code> table reference
+     * Create an aliased <code>erp_marcato.usererp</code> table reference
      */
     public UserErp(Name alias) {
-        this(alias, USER_ERP);
+        this(alias, USERERP);
     }
 
     /**
-     * Create a <code>app_db.user_erp</code> table reference
+     * Create a <code>erp_marcato.usererp</code> table reference
      */
     public UserErp() {
-        this(DSL.name("user_erp"), null);
-    }
-
-    public <O extends Record> UserErp(Table<O> path, ForeignKey<O, UserErpRecord> childPath, InverseForeignKey<O, UserErpRecord> parentPath) {
-        super(path, childPath, parentPath, USER_ERP);
-    }
-
-    /**
-     * A subtype implementing {@link Path} for simplified path-based joins.
-     */
-    public static class UserErpPath extends UserErp implements Path<UserErpRecord> {
-
-        private static final long serialVersionUID = 1L;
-        public <O extends Record> UserErpPath(Table<O> path, ForeignKey<O, UserErpRecord> childPath, InverseForeignKey<O, UserErpRecord> parentPath) {
-            super(path, childPath, parentPath);
-        }
-        private UserErpPath(Name alias, Table<UserErpRecord> aliased) {
-            super(alias, aliased);
-        }
-
-        @Override
-        public UserErpPath as(String alias) {
-            return new UserErpPath(DSL.name(alias), this);
-        }
-
-        @Override
-        public UserErpPath as(Name alias) {
-            return new UserErpPath(alias, this);
-        }
-
-        @Override
-        public UserErpPath as(Table<?> alias) {
-            return new UserErpPath(alias.getQualifiedName(), this);
-        }
+        this(DSL.name("usererp"), null);
     }
 
     @Override
     public Schema getSchema() {
-        return aliased() ? null : AppDb.APP_DB;
+        return aliased() ? null : ErpMarcato.ERP_MARCATO;
     }
 
     @Override
@@ -155,51 +120,12 @@ public class UserErp extends TableImpl<UserErpRecord> {
 
     @Override
     public UniqueKey<UserErpRecord> getPrimaryKey() {
-        return Keys.USER_ERP_PKEY;
+        return Keys.USERERP_PKEY;
     }
 
     @Override
     public List<UniqueKey<UserErpRecord>> getUniqueKeys() {
-        return Arrays.asList(Keys.USER_ERP_KEYCLOAK_UUID_KEY);
-    }
-
-    private transient CompanyPath _company;
-
-    /**
-     * Get the implicit to-many join path to the <code>app_db.company</code>
-     * table
-     */
-    public CompanyPath company() {
-        if (_company == null)
-            _company = new CompanyPath(this, null, Keys.COMPANY__COMPANY_CREATED_BY_USER_ID_FKEY.getInverseKey());
-
-        return _company;
-    }
-
-    private transient CompanyDepartmentAddressPath _companyDepartmentAddress;
-
-    /**
-     * Get the implicit to-many join path to the
-     * <code>app_db.company_department_address</code> table
-     */
-    public CompanyDepartmentAddressPath companyDepartmentAddress() {
-        if (_companyDepartmentAddress == null)
-            _companyDepartmentAddress = new CompanyDepartmentAddressPath(this, null, Keys.COMPANY_DEPARTMENT_ADDRESS__FK_MANAGER.getInverseKey());
-
-        return _companyDepartmentAddress;
-    }
-
-    private transient EmployeesPath _employees;
-
-    /**
-     * Get the implicit to-many join path to the <code>app_db.employees</code>
-     * table
-     */
-    public EmployeesPath employees() {
-        if (_employees == null)
-            _employees = new EmployeesPath(this, null, Keys.EMPLOYEES__FK_USER.getInverseKey());
-
-        return _employees;
+        return Arrays.asList(Keys.USERERP_USER_UUID_KEY);
     }
 
     @Override

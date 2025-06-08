@@ -9,6 +9,7 @@ import com.marcato.springmarcatoerp.entity.tables.UserErp;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
+import com.marcato.springmarcatoerp.entity.tables.pojos.UserErpPojo;
 import org.jooq.Record1;
 import org.jooq.impl.UpdatableRecordImpl;
 
@@ -22,59 +23,73 @@ public class UserErpRecord extends UpdatableRecordImpl<UserErpRecord> {
     private static final long serialVersionUID = 1L;
 
     /**
-     * Setter for <code>app_db.user_erp.id</code>.
+     * Setter for <code>erp_marcato.usererp.id</code>.
      */
     public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>app_db.user_erp.id</code>.
+     * Getter for <code>erp_marcato.usererp.id</code>.
      */
     public Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>app_db.user_erp.keycloak_uuid</code>.
+     * Setter for <code>erp_marcato.usererp.user_uuid</code>.
      */
-    public void setKeycloakUuid(UUID value) {
+    public void setUserUuid(UUID value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>app_db.user_erp.keycloak_uuid</code>.
+     * Getter for <code>erp_marcato.usererp.user_uuid</code>.
      */
-    public UUID getKeycloakUuid() {
+    public UUID getUserUuid() {
         return (UUID) get(1);
     }
 
     /**
-     * Setter for <code>app_db.user_erp.created_at</code>.
+     * Setter for <code>erp_marcato.usererp.created_at</code>.
      */
     public void setCreatedAt(OffsetDateTime value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>app_db.user_erp.created_at</code>.
+     * Getter for <code>erp_marcato.usererp.created_at</code>.
      */
     public OffsetDateTime getCreatedAt() {
         return (OffsetDateTime) get(2);
     }
 
     /**
-     * Setter for <code>app_db.user_erp.updated_at</code>.
+     * Setter for <code>erp_marcato.usererp.username</code>.
      */
-    public void setUpdatedAt(OffsetDateTime value) {
+    public void setUsername(String value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>app_db.user_erp.updated_at</code>.
+     * Getter for <code>erp_marcato.usererp.username</code>.
      */
-    public OffsetDateTime getUpdatedAt() {
-        return (OffsetDateTime) get(3);
+    public String getUsername() {
+        return (String) get(3);
+    }
+
+    /**
+     * Setter for <code>erp_marcato.usererp.full_name</code>.
+     */
+    public void setFullName(String value) {
+        set(4, value);
+    }
+
+    /**
+     * Getter for <code>erp_marcato.usererp.full_name</code>.
+     */
+    public String getFullName() {
+        return (String) get(4);
     }
 
     // -------------------------------------------------------------------------
@@ -91,36 +106,38 @@ public class UserErpRecord extends UpdatableRecordImpl<UserErpRecord> {
     // -------------------------------------------------------------------------
 
     /**
-     * Create a detached UserErpRecord
+     * Create a detached UsererpRecord
      */
     public UserErpRecord() {
-        super(UserErp.USER_ERP);
+        super(UserErp.USERERP);
     }
 
     /**
-     * Create a detached, initialised UserErpRecord
+     * Create a detached, initialised UsererpRecord
      */
-    public UserErpRecord(Integer id, UUID keycloakUuid, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
-        super(UserErp.USER_ERP);
+    public UserErpRecord(Integer id, UUID userUuid, OffsetDateTime createdAt, String username, String fullName) {
+        super(UserErp.USERERP);
 
         setId(id);
-        setKeycloakUuid(keycloakUuid);
+        setUserUuid(userUuid);
         setCreatedAt(createdAt);
-        setUpdatedAt(updatedAt);
+        setUsername(username);
+        setFullName(fullName);
         resetTouchedOnNotNull();
     }
 
     /**
-     * Create a detached, initialised UserErpRecord
+     * Create a detached, initialised UsererpRecord
      */
-    public UserErpRecord(com.marcato.springmarcatoerp.entity.tables.pojos.UserErp value) {
-        super(UserErp.USER_ERP);
+    public UserErpRecord(UserErpPojo value) {
+        super(UserErp.USERERP);
 
         if (value != null) {
             setId(value.getId());
-            setKeycloakUuid(value.getKeycloakUuid());
+            setUserUuid(value.getUserUuid());
             setCreatedAt(value.getCreatedAt());
-            setUpdatedAt(value.getUpdatedAt());
+            setUsername(value.getUsername());
+            setFullName(value.getFullName());
             resetTouchedOnNotNull();
         }
     }

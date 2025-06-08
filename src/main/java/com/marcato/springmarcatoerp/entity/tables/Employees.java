@@ -4,26 +4,21 @@
 package com.marcato.springmarcatoerp.entity.tables;
 
 
-import com.marcato.springmarcatoerp.entity.AppDb;
+import com.marcato.springmarcatoerp.entity.ErpMarcato;
 import com.marcato.springmarcatoerp.entity.Keys;
-import com.marcato.springmarcatoerp.entity.tables.CompanyDepartmentAddress.CompanyDepartmentAddressPath;
-import com.marcato.springmarcatoerp.entity.tables.UserErp.UserErpPath;
 import com.marcato.springmarcatoerp.entity.tables.records.EmployeesRecord;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.UUID;
 
+import org.jooq.Check;
 import org.jooq.Condition;
 import org.jooq.Field;
-import org.jooq.ForeignKey;
-import org.jooq.InverseForeignKey;
+import org.jooq.Identity;
 import org.jooq.Name;
-import org.jooq.Path;
 import org.jooq.PlainSQL;
 import org.jooq.QueryPart;
-import org.jooq.Record;
 import org.jooq.SQL;
 import org.jooq.Schema;
 import org.jooq.Select;
@@ -33,6 +28,7 @@ import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
+import org.jooq.impl.Internal;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
@@ -46,7 +42,7 @@ public class Employees extends TableImpl<EmployeesRecord> {
     private static final long serialVersionUID = 1L;
 
     /**
-     * The reference instance of <code>app_db.employees</code>
+     * The reference instance of <code>erp_marcato.employees</code>
      */
     public static final Employees EMPLOYEES = new Employees();
 
@@ -59,34 +55,24 @@ public class Employees extends TableImpl<EmployeesRecord> {
     }
 
     /**
-     * The column <code>app_db.employees.id</code>.
+     * The column <code>erp_marcato.employees.id</code>.
      */
-    public final TableField<EmployeesRecord, UUID> ID = createField(DSL.name("id"), SQLDataType.UUID.nullable(false), this, "");
+    public final TableField<EmployeesRecord, Integer> ID = createField(DSL.name("id"), SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
-     * The column <code>app_db.employees.user_id</code>.
+     * The column <code>erp_marcato.employees.full_name</code>.
      */
-    public final TableField<EmployeesRecord, Integer> USER_ID = createField(DSL.name("user_id"), SQLDataType.INTEGER, this, "");
+    public final TableField<EmployeesRecord, String> FULL_NAME = createField(DSL.name("full_name"), SQLDataType.VARCHAR(255), this, "");
 
     /**
-     * The column <code>app_db.employees.email</code>.
+     * The column <code>erp_marcato.employees.tipo_identificador</code>.
      */
-    public final TableField<EmployeesRecord, String> EMAIL = createField(DSL.name("email"), SQLDataType.VARCHAR(60).nullable(false), this, "");
+    public final TableField<EmployeesRecord, String> TIPO_IDENTIFICADOR = createField(DSL.name("tipo_identificador"), SQLDataType.VARCHAR(4).nullable(false), this, "");
 
     /**
-     * The column <code>app_db.employees.company_id</code>.
+     * The column <code>erp_marcato.employees.identificador</code>.
      */
-    public final TableField<EmployeesRecord, UUID> COMPANY_ID = createField(DSL.name("company_id"), SQLDataType.UUID.nullable(false), this, "");
-
-    /**
-     * The column <code>app_db.employees.department_id</code>.
-     */
-    public final TableField<EmployeesRecord, UUID> DEPARTMENT_ID = createField(DSL.name("department_id"), SQLDataType.UUID.nullable(false), this, "");
-
-    /**
-     * The column <code>app_db.employees.address_id</code>.
-     */
-    public final TableField<EmployeesRecord, UUID> ADDRESS_ID = createField(DSL.name("address_id"), SQLDataType.UUID.nullable(false), this, "");
+    public final TableField<EmployeesRecord, String> IDENTIFICADOR = createField(DSL.name("identificador"), SQLDataType.VARCHAR(14).nullable(false), this, "");
 
     private Employees(Name alias, Table<EmployeesRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
@@ -97,97 +83,47 @@ public class Employees extends TableImpl<EmployeesRecord> {
     }
 
     /**
-     * Create an aliased <code>app_db.employees</code> table reference
+     * Create an aliased <code>erp_marcato.employees</code> table reference
      */
     public Employees(String alias) {
         this(DSL.name(alias), EMPLOYEES);
     }
 
     /**
-     * Create an aliased <code>app_db.employees</code> table reference
+     * Create an aliased <code>erp_marcato.employees</code> table reference
      */
     public Employees(Name alias) {
         this(alias, EMPLOYEES);
     }
 
     /**
-     * Create a <code>app_db.employees</code> table reference
+     * Create a <code>erp_marcato.employees</code> table reference
      */
     public Employees() {
         this(DSL.name("employees"), null);
     }
 
-    public <O extends Record> Employees(Table<O> path, ForeignKey<O, EmployeesRecord> childPath, InverseForeignKey<O, EmployeesRecord> parentPath) {
-        super(path, childPath, parentPath, EMPLOYEES);
-    }
-
-    /**
-     * A subtype implementing {@link Path} for simplified path-based joins.
-     */
-    public static class EmployeesPath extends Employees implements Path<EmployeesRecord> {
-
-        private static final long serialVersionUID = 1L;
-        public <O extends Record> EmployeesPath(Table<O> path, ForeignKey<O, EmployeesRecord> childPath, InverseForeignKey<O, EmployeesRecord> parentPath) {
-            super(path, childPath, parentPath);
-        }
-        private EmployeesPath(Name alias, Table<EmployeesRecord> aliased) {
-            super(alias, aliased);
-        }
-
-        @Override
-        public EmployeesPath as(String alias) {
-            return new EmployeesPath(DSL.name(alias), this);
-        }
-
-        @Override
-        public EmployeesPath as(Name alias) {
-            return new EmployeesPath(alias, this);
-        }
-
-        @Override
-        public EmployeesPath as(Table<?> alias) {
-            return new EmployeesPath(alias.getQualifiedName(), this);
-        }
-    }
-
     @Override
     public Schema getSchema() {
-        return aliased() ? null : AppDb.APP_DB;
+        return aliased() ? null : ErpMarcato.ERP_MARCATO;
     }
 
     @Override
-    public UniqueKey<EmployeesRecord> getPrimaryKey() {
-        return Keys.EMPLOYEES_PKEY;
+    public Identity<EmployeesRecord, Integer> getIdentity() {
+        return (Identity<EmployeesRecord, Integer>) super.getIdentity();
     }
 
     @Override
-    public List<ForeignKey<EmployeesRecord, ?>> getReferences() {
-        return Arrays.asList(Keys.EMPLOYEES__FK_COMPANY_DEPARTMENT_ADDRESS, Keys.EMPLOYEES__FK_USER);
+    public List<UniqueKey<EmployeesRecord>> getUniqueKeys() {
+        return Arrays.asList(Keys.UQ_IDENTIFICADOR);
     }
 
-    private transient CompanyDepartmentAddressPath _companyDepartmentAddress;
-
-    /**
-     * Get the implicit join path to the
-     * <code>app_db.company_department_address</code> table.
-     */
-    public CompanyDepartmentAddressPath companyDepartmentAddress() {
-        if (_companyDepartmentAddress == null)
-            _companyDepartmentAddress = new CompanyDepartmentAddressPath(this, Keys.EMPLOYEES__FK_COMPANY_DEPARTMENT_ADDRESS, null);
-
-        return _companyDepartmentAddress;
-    }
-
-    private transient UserErpPath _userErp;
-
-    /**
-     * Get the implicit join path to the <code>app_db.user_erp</code> table.
-     */
-    public UserErpPath userErp() {
-        if (_userErp == null)
-            _userErp = new UserErpPath(this, Keys.EMPLOYEES__FK_USER, null);
-
-        return _userErp;
+    @Override
+    public List<Check<EmployeesRecord>> getChecks() {
+        return Arrays.asList(
+            Internal.createCheck(this, DSL.name("chk_size_identificador"), "(((((tipo_identificador)::text = 'CPF'::text) AND (length((identificador)::text) = 11)) OR (((tipo_identificador)::text = 'CNPJ'::text) AND (length((identificador)::text) = 14))))", true),
+            Internal.createCheck(this, DSL.name("chk_tipo_identificador"), "(((tipo_identificador)::text = ANY ((ARRAY['CPF'::character varying, 'CNPJ'::character varying])::text[])))", true)
+        );
     }
 
     @Override

@@ -4,17 +4,13 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.*;
 
-import jakarta.annotation.PreDestroy;
+import com.marcato.springmarcatoerp.entity.tables.UserErp;
+import com.marcato.springmarcatoerp.entity.tables.pojos.UserErpPojo;
+import com.marcato.springmarcatoerp.entity.tables.records.UserErpRecord;
 import org.jooq.DSLContext;
-import org.springframework.core.task.AsyncTaskExecutor;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.marcato.springmarcatoerp.entity.tables.UserErp;
-import com.marcato.springmarcatoerp.entity.tables.records.UserErpRecord;
 @Service
 public class UserService {
 
@@ -26,13 +22,22 @@ public class UserService {
     @Async
     public CompletableFuture<Optional<UserErpRecord>> getUserErpById(int id){
         return CompletableFuture.completedFuture(Optional.ofNullable
-                (create.selectFrom(UserErp.USER_ERP).where(UserErp.USER_ERP.ID.eq(id)).fetchOne()));
+                (create.selectFrom(UserErp.USERERP).where(UserErp.USERERP.ID.eq(id)).fetchOne()));
     }
     @Async
-    public CompletableFuture<Optional<UserErpRecord>> getUserByKeycloakUUID(UUID uuid){
+    public CompletableFuture<Optional<UserErpRecord>> getUserByUUID(UUID uuid){
         return CompletableFuture.completedFuture(Optional.ofNullable
-                (create.selectFrom(UserErp.USER_ERP).where(UserErp.USER_ERP.KEYCLOAK_UUID.eq(uuid)).fetchOne()));
+                (create.selectFrom(UserErp.USERERP).where(UserErp.USERERP.USER_UUID.eq(uuid)).fetchOne()));
     }
 
+    @Async
+    public CompletableFuture<Integer> createUser(UserErpPojo userErpPojo){
+            UserErpRecord userErpRecord = create.newRecord(UserErp.USERERP);
+            userErpRecord.setUsername(userErpPojo.getUsername());
+            userErpRecord.setCreatedAt(userErpPojo.getCreatedAt());
+            userErpRecord.setFullName(userErpPojo.getFullName());
+            userErpRecord.setUserUuid(userErpPojo.getUserUuid());
+        return CompletableFuture.completedFuture(userErpRecord.store());
+    }
 
 }

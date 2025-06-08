@@ -1,21 +1,27 @@
 package com.marcato.springmarcatoerp.resources;
 
+import com.marcato.springmarcatoerp.entity.DTO.User.UserDTO;
+import com.marcato.springmarcatoerp.entity.DTO.User.UserRegistrationDTO;
+import com.marcato.springmarcatoerp.entity.tables.pojos.UserErpPojo;
 import com.marcato.springmarcatoerp.entity.tables.records.UserErpRecord;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.web.bind.annotation.*;
 
 import com.marcato.springmarcatoerp.service.UserService;
 
+import java.time.OffsetDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 
 @RestController
 @RequestMapping("/user")
@@ -27,21 +33,55 @@ public class UserResource {
         this.userService = puserService;
     }
     
-    @GetMapping("/{uuid}")
-    public ResponseEntity<UserErpRecord> getUserByUUID(@PathVariable UUID uuid){
-        Future<Optional<UserErpRecord>>fetchUser = userService.getUserByKeycloakUUID(uuid);
+    @GetMapping("/status")
+    public ResponseEntity<?> fetchUserUUID(@AuthenticationPrincipal Jwt principal) throws ExecutionException, InterruptedException {
+        UUID userSub = UserDTO.convertOAuthSubToUUID(principal.getSubject());
         try{
-            if(fetchUser.get().isEmpty()){
-                return new ResponseEntity<>(HttpStatusCode.valueOf(404));
+            Optional<UserErpRecord> userRecord = userService.getUserByUUID(userSub).get();
+            if(userRecord.isEmpty()){
+                return ResponseEntity.noContent().build();
             }
-            return new ResponseEntity<>(fetchUser.get().get(), HttpStatusCode.valueOf(200));
+            UserDTO userDTO = UserDTO.fromRecord(userRecord.get());
+            return ResponseEntity.ok(userDTO);
+
+        }catch (ExecutionException | InterruptedException e){
+            logger.error("Thread execution error");
+            return new ResponseEntity<>(e.getMessage(), HttpStatusCode.valueOf(500));
         }
-        catch (ExecutionException | InterruptedException e) {
-            logger.error("Cause:{}\nMessage:{}", e.getCause(), e.getMessage());
-            return new ResponseEntity<>(HttpStatusCode.valueOf(500));
+        catch (Exception e){
+            logger.error(e.getMessage());
+            return new ResponseEntity<>(e.getMessage(), HttpStatusCode.valueOf(500));
+
         }
     }
 
+    @PostMapping("/register")
+    @PreAuthorize("hasAnyAuthority('User,Moderator,Administrator')")
+    public ResponseEntity<String>createUser(@AuthenticationPrincipal Jwt principal, @Valid @RequestBody UserRegistrationDTO userDTO){
+
+        try{
+            UUID userSub = UserDTO.convertOAuthSubToUUID(principal.getSubject());
+            if(userService.getUserByUUID(userSub).get().isPresent()){
+                return new ResponseEntity<>("User already registered",HttpStatusCode.valueOf(409));
+            }
+            UserErpPojo userPojo = new UserErpPojo();
+            userPojo.setUserUuid(userSub);
+            userPojo.setUsername(userDTO.userName());
+            userPojo.setFullName(userDTO.fullName());
+            userPojo.setCreatedAt(OffsetDateTime.now());
+            logger.info("Trying to Insert User");
+            if(userService.createUser(userPojo).get() > 0){
+                logger.info("User Inserted With Success");
+                return new ResponseEntity<>("User Registration was a success.",HttpStatusCode.valueOf(201));
+            }
+            logger.warn("User was not registered");
+
+            return new ResponseEntity<>("User Registration not happened.",HttpStatusCode.valueOf(500));
+        }catch (Exception e){
+            logger.error(e.getMessage());
+            return new ResponseEntity<>("Error: " + e.getMessage(),HttpStatusCode.valueOf(500));
+        }
+    }
 
 
 }

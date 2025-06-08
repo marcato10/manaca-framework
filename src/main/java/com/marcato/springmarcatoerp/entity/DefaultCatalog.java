@@ -26,9 +26,9 @@ public class DefaultCatalog extends CatalogImpl {
     public static final DefaultCatalog DEFAULT_CATALOG = new DefaultCatalog();
 
     /**
-     * The schema <code>app_db</code>.
+     * The schema <code>erp_marcato</code>.
      */
-    public final AppDb APP_DB = AppDb.APP_DB;
+    public final ErpMarcato ERP_MARCATO = ErpMarcato.ERP_MARCATO;
 
     /**
      * No further instances allowed
@@ -40,7 +40,7 @@ public class DefaultCatalog extends CatalogImpl {
     @Override
     public final List<Schema> getSchemas() {
         return Arrays.asList(
-            AppDb.APP_DB
+            ErpMarcato.ERP_MARCATO
         );
     }
 

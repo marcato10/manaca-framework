@@ -4,47 +4,23 @@
 package com.marcato.springmarcatoerp.entity;
 
 
-import com.marcato.springmarcatoerp.entity.tables.Address;
-import com.marcato.springmarcatoerp.entity.tables.Company;
-import com.marcato.springmarcatoerp.entity.tables.CompanyDepartmentAddress;
-import com.marcato.springmarcatoerp.entity.tables.Department;
 import com.marcato.springmarcatoerp.entity.tables.Employees;
 import com.marcato.springmarcatoerp.entity.tables.UserErp;
 
 
 /**
- * Convenience access to all tables in app_db.
+ * Convenience access to all tables in erp_marcato.
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 public class Tables {
 
     /**
-     * The table <code>app_db.address</code>.
-     */
-    public static final Address ADDRESS = Address.ADDRESS;
-
-    /**
-     * The table <code>app_db.company</code>.
-     */
-    public static final Company COMPANY = Company.COMPANY;
-
-    /**
-     * The table <code>app_db.company_department_address</code>.
-     */
-    public static final CompanyDepartmentAddress COMPANY_DEPARTMENT_ADDRESS = CompanyDepartmentAddress.COMPANY_DEPARTMENT_ADDRESS;
-
-    /**
-     * The table <code>app_db.department</code>.
-     */
-    public static final Department DEPARTMENT = Department.DEPARTMENT;
-
-    /**
-     * The table <code>app_db.employees</code>.
+     * The table <code>erp_marcato.employees</code>.
      */
     public static final Employees EMPLOYEES = Employees.EMPLOYEES;
 
     /**
-     * The table <code>app_db.user_erp</code>.
+     * The table <code>erp_marcato.usererp</code>.
      */
-    public static final UserErp USER_ERP = UserErp.USER_ERP;
+    public static final UserErp USERERP = UserErp.USERERP;
 }

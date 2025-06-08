@@ -1,0 +1,25 @@
+server:
+  port: 8080
+
+spring:
+  threads:
+    virtual:
+      enabled: true
+  application:
+    name: Marcato ERP
+  datasource:
+      url: jdbc:postgresql://localhost:5432/postgres
+      username: postgres
+      password: sukhoisu57
+
+
+logging:
+  level:
+    root: WARN
+    org.springframework.web: DEBUG
+
+okta:
+  oauth2:
+    issuer: https://dev-tpjedcct43j1eghk.us.auth0.com/
+    audience: https://marcato.erp.com
+    groups-claim: https://marcato.erp.com/groups
