@@ -1,7 +1,6 @@
-package com.marcato.springmarcatoerp.entity.DTO.User;
+package com.marcato.springmarcatoerp.DTO.User;
 
 import com.marcato.springmarcatoerp.entity.tables.records.UserErpRecord;
-import jakarta.validation.constraints.NotBlank;
 
 import java.nio.charset.StandardCharsets;
 import java.time.OffsetDateTime;

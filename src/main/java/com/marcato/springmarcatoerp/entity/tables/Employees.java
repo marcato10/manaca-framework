@@ -6,19 +6,27 @@ package com.marcato.springmarcatoerp.entity.tables;
 
 import com.marcato.springmarcatoerp.entity.ErpMarcato;
 import com.marcato.springmarcatoerp.entity.Keys;
+import com.marcato.springmarcatoerp.entity.enums.Status;
+import com.marcato.springmarcatoerp.entity.tables.EmployeesIdentifier.EmployeesIdentifierPath;
+import com.marcato.springmarcatoerp.entity.tables.Role.RolePath;
+import com.marcato.springmarcatoerp.entity.tables.Sector.SectorPath;
 import com.marcato.springmarcatoerp.entity.tables.records.EmployeesRecord;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import org.jooq.Check;
 import org.jooq.Condition;
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Identity;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.PlainSQL;
 import org.jooq.QueryPart;
+import org.jooq.Record;
 import org.jooq.SQL;
 import org.jooq.Schema;
 import org.jooq.Select;
@@ -28,7 +36,6 @@ import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
-import org.jooq.impl.Internal;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
@@ -57,22 +64,32 @@ public class Employees extends TableImpl<EmployeesRecord> {
     /**
      * The column <code>erp_marcato.employees.id</code>.
      */
-    public final TableField<EmployeesRecord, Integer> ID = createField(DSL.name("id"), SQLDataType.INTEGER.nullable(false).identity(true), this, "");
+    public final TableField<EmployeesRecord, Long> ID = createField(DSL.name("id"), SQLDataType.BIGINT.nullable(false).identity(true), this, "");
 
     /**
      * The column <code>erp_marcato.employees.full_name</code>.
      */
-    public final TableField<EmployeesRecord, String> FULL_NAME = createField(DSL.name("full_name"), SQLDataType.VARCHAR(255), this, "");
+    public final TableField<EmployeesRecord, String> FULL_NAME = createField(DSL.name("full_name"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
-     * The column <code>erp_marcato.employees.tipo_identificador</code>.
+     * The column <code>erp_marcato.employees.hire_date</code>.
      */
-    public final TableField<EmployeesRecord, String> TIPO_IDENTIFICADOR = createField(DSL.name("tipo_identificador"), SQLDataType.VARCHAR(4).nullable(false), this, "");
+    public final TableField<EmployeesRecord, LocalDateTime> HIRE_DATE = createField(DSL.name("hire_date"), SQLDataType.LOCALDATETIME(6), this, "");
 
     /**
-     * The column <code>erp_marcato.employees.identificador</code>.
+     * The column <code>erp_marcato.employees.role_id</code>.
      */
-    public final TableField<EmployeesRecord, String> IDENTIFICADOR = createField(DSL.name("identificador"), SQLDataType.VARCHAR(14).nullable(false), this, "");
+    public final TableField<EmployeesRecord, Integer> ROLE_ID = createField(DSL.name("role_id"), SQLDataType.INTEGER.nullable(false), this, "");
+
+    /**
+     * The column <code>erp_marcato.employees.situation</code>.
+     */
+    public final TableField<EmployeesRecord, Status> SITUATION = createField(DSL.name("situation"), SQLDataType.VARCHAR.nullable(false).asEnumDataType(Status.class), this, "");
+
+    /**
+     * The column <code>erp_marcato.employees.sector_id</code>.
+     */
+    public final TableField<EmployeesRecord, Long> SECTOR_ID = createField(DSL.name("sector_id"), SQLDataType.BIGINT.nullable(false), this, "");
 
     private Employees(Name alias, Table<EmployeesRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
@@ -103,27 +120,94 @@ public class Employees extends TableImpl<EmployeesRecord> {
         this(DSL.name("employees"), null);
     }
 
+    public <O extends Record> Employees(Table<O> path, ForeignKey<O, EmployeesRecord> childPath, InverseForeignKey<O, EmployeesRecord> parentPath) {
+        super(path, childPath, parentPath, EMPLOYEES);
+    }
+
+    /**
+     * A subtype implementing {@link Path} for simplified path-based joins.
+     */
+    public static class EmployeesPath extends Employees implements Path<EmployeesRecord> {
+
+        private static final long serialVersionUID = 1L;
+        public <O extends Record> EmployeesPath(Table<O> path, ForeignKey<O, EmployeesRecord> childPath, InverseForeignKey<O, EmployeesRecord> parentPath) {
+            super(path, childPath, parentPath);
+        }
+        private EmployeesPath(Name alias, Table<EmployeesRecord> aliased) {
+            super(alias, aliased);
+        }
+
+        @Override
+        public EmployeesPath as(String alias) {
+            return new EmployeesPath(DSL.name(alias), this);
+        }
+
+        @Override
+        public EmployeesPath as(Name alias) {
+            return new EmployeesPath(alias, this);
+        }
+
+        @Override
+        public EmployeesPath as(Table<?> alias) {
+            return new EmployeesPath(alias.getQualifiedName(), this);
+        }
+    }
+
     @Override
     public Schema getSchema() {
         return aliased() ? null : ErpMarcato.ERP_MARCATO;
     }
 
     @Override
-    public Identity<EmployeesRecord, Integer> getIdentity() {
-        return (Identity<EmployeesRecord, Integer>) super.getIdentity();
+    public Identity<EmployeesRecord, Long> getIdentity() {
+        return (Identity<EmployeesRecord, Long>) super.getIdentity();
     }
 
     @Override
-    public List<UniqueKey<EmployeesRecord>> getUniqueKeys() {
-        return Arrays.asList(Keys.UQ_IDENTIFICADOR);
+    public UniqueKey<EmployeesRecord> getPrimaryKey() {
+        return Keys.EMPLOYEES_PKEY;
     }
 
     @Override
-    public List<Check<EmployeesRecord>> getChecks() {
-        return Arrays.asList(
-            Internal.createCheck(this, DSL.name("chk_size_identificador"), "(((((tipo_identificador)::text = 'CPF'::text) AND (length((identificador)::text) = 11)) OR (((tipo_identificador)::text = 'CNPJ'::text) AND (length((identificador)::text) = 14))))", true),
-            Internal.createCheck(this, DSL.name("chk_tipo_identificador"), "(((tipo_identificador)::text = ANY ((ARRAY['CPF'::character varying, 'CNPJ'::character varying])::text[])))", true)
-        );
+    public List<ForeignKey<EmployeesRecord, ?>> getReferences() {
+        return Arrays.asList(Keys.EMPLOYEES__FK_ROLE_ID, Keys.EMPLOYEES__FK_SECTOR_ID);
+    }
+
+    private transient RolePath _role;
+
+    /**
+     * Get the implicit join path to the <code>erp_marcato.role</code> table.
+     */
+    public RolePath role() {
+        if (_role == null)
+            _role = new RolePath(this, Keys.EMPLOYEES__FK_ROLE_ID, null);
+
+        return _role;
+    }
+
+    private transient SectorPath _sector;
+
+    /**
+     * Get the implicit join path to the <code>erp_marcato.sector</code> table.
+     */
+    public SectorPath sector() {
+        if (_sector == null)
+            _sector = new SectorPath(this, Keys.EMPLOYEES__FK_SECTOR_ID, null);
+
+        return _sector;
+    }
+
+    private transient EmployeesIdentifierPath _employeesIdentifier;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>erp_marcato.employees_identifier</code> table
+     */
+    public EmployeesIdentifierPath employeesIdentifier() {
+        if (_employeesIdentifier == null)
+            _employeesIdentifier = new EmployeesIdentifierPath(this, null, Keys.EMPLOYEES_IDENTIFIER__FK_EMPLOYEES_ID.getInverseKey());
+
+        return _employeesIdentifier;
     }
 
     @Override

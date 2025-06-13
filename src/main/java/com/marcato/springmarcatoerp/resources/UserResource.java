@@ -1,7 +1,7 @@
 package com.marcato.springmarcatoerp.resources;
 
-import com.marcato.springmarcatoerp.entity.DTO.User.UserDTO;
-import com.marcato.springmarcatoerp.entity.DTO.User.UserRegistrationDTO;
+import com.marcato.springmarcatoerp.DTO.User.UserDTO;
+import com.marcato.springmarcatoerp.DTO.User.UserRegistrationDTO;
 import com.marcato.springmarcatoerp.entity.tables.pojos.UserErpPojo;
 import com.marcato.springmarcatoerp.entity.tables.records.UserErpRecord;
 import jakarta.validation.Valid;
@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import com.marcato.springmarcatoerp.service.UserService;
 
 import java.time.OffsetDateTime;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
@@ -82,6 +80,5 @@ public class UserResource {
             return new ResponseEntity<>("Error: " + e.getMessage(),HttpStatusCode.valueOf(500));
         }
     }
-
 
 }

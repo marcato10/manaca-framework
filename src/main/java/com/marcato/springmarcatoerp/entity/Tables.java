@@ -4,7 +4,11 @@
 package com.marcato.springmarcatoerp.entity;
 
 
+import com.marcato.springmarcatoerp.entity.tables.Department;
 import com.marcato.springmarcatoerp.entity.tables.Employees;
+import com.marcato.springmarcatoerp.entity.tables.EmployeesIdentifier;
+import com.marcato.springmarcatoerp.entity.tables.Role;
+import com.marcato.springmarcatoerp.entity.tables.Sector;
 import com.marcato.springmarcatoerp.entity.tables.UserErp;
 
 
@@ -15,9 +19,29 @@ import com.marcato.springmarcatoerp.entity.tables.UserErp;
 public class Tables {
 
     /**
+     * The table <code>erp_marcato.department</code>.
+     */
+    public static final Department DEPARTMENT = Department.DEPARTMENT;
+
+    /**
      * The table <code>erp_marcato.employees</code>.
      */
     public static final Employees EMPLOYEES = Employees.EMPLOYEES;
+
+    /**
+     * The table <code>erp_marcato.employees_identifier</code>.
+     */
+    public static final EmployeesIdentifier EMPLOYEES_IDENTIFIER = EmployeesIdentifier.EMPLOYEES_IDENTIFIER;
+
+    /**
+     * The table <code>erp_marcato.role</code>.
+     */
+    public static final Role ROLE = Role.ROLE;
+
+    /**
+     * The table <code>erp_marcato.sector</code>.
+     */
+    public static final Sector SECTOR = Sector.SECTOR;
 
     /**
      * The table <code>erp_marcato.usererp</code>.
