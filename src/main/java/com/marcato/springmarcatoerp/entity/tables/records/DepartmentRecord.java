@@ -6,6 +6,7 @@ package com.marcato.springmarcatoerp.entity.tables.records;
 
 import com.marcato.springmarcatoerp.entity.tables.Department;
 
+import com.marcato.springmarcatoerp.entity.tables.pojos.DepartmentPojo;
 import org.jooq.Record1;
 import org.jooq.impl.UpdatableRecordImpl;
 
@@ -95,7 +96,7 @@ public class DepartmentRecord extends UpdatableRecordImpl<DepartmentRecord> {
     /**
      * Create a detached, initialised DepartmentRecord
      */
-    public DepartmentRecord(com.marcato.springmarcatoerp.entity.tables.pojos.Department value) {
+    public DepartmentRecord(DepartmentPojo value) {
         super(Department.DEPARTMENT);
 
         if (value != null) {

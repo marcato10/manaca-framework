@@ -16,15 +16,11 @@ public record UserDTO(Integer id,
         if (sub == null || sub.trim().isEmpty()) {
             throw new IllegalArgumentException("Auth0 subject string cannot be null or empty.");
         }
-
         String idPart = sub;
         int pipeIndex = sub.indexOf('|');
-
         if (pipeIndex != -1 && pipeIndex + 1 < sub.length()) {
             idPart = sub.substring(pipeIndex + 1);
         }
-
-
         return UUID.nameUUIDFromBytes(idPart.getBytes(StandardCharsets.UTF_8));
     }
 

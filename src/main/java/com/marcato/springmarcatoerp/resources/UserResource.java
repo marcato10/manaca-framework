@@ -68,6 +68,7 @@ public class UserResource {
             userPojo.setFullName(userDTO.fullName());
             userPojo.setCreatedAt(OffsetDateTime.now());
             logger.info("Trying to Insert User");
+
             if(userService.createUser(userPojo).get() > 0){
                 logger.info("User Inserted With Success");
                 return new ResponseEntity<>("User Registration was a success.",HttpStatusCode.valueOf(201));
