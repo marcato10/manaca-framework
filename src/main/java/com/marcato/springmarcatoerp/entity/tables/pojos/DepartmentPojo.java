@@ -38,42 +38,42 @@ public class DepartmentPojo implements Serializable {
     }
 
     /**
-     * Getter for <code>erp_marcato.department.id</code>.
+     * Getter for <code>erp_marcato.Department.id</code>.
      */
     public Integer getId() {
         return this.id;
     }
 
     /**
-     * Setter for <code>erp_marcato.department.id</code>.
+     * Setter for <code>erp_marcato.Department.id</code>.
      */
     public void setId(Integer id) {
         this.id = id;
     }
 
     /**
-     * Getter for <code>erp_marcato.department.title</code>.
+     * Getter for <code>erp_marcato.Department.title</code>.
      */
     public String getTitle() {
         return this.title;
     }
 
     /**
-     * Setter for <code>erp_marcato.department.title</code>.
+     * Setter for <code>erp_marcato.Department.title</code>.
      */
     public void setTitle(String title) {
         this.title = title;
     }
 
     /**
-     * Getter for <code>erp_marcato.department.description</code>.
+     * Getter for <code>erp_marcato.Department.description</code>.
      */
     public String getDescription() {
         return this.description;
     }
 
     /**
-     * Setter for <code>erp_marcato.department.description</code>.
+     * Setter for <code>erp_marcato.Department.description</code>.
      */
     public void setDescription(String description) {
         this.description = description;

@@ -6,18 +6,14 @@ package com.marcato.springmarcatoerp.entity.tables;
 
 import com.marcato.springmarcatoerp.entity.ErpMarcato;
 import com.marcato.springmarcatoerp.entity.Keys;
-import com.marcato.springmarcatoerp.entity.tables.Department.DepartmentPath;
 import com.marcato.springmarcatoerp.entity.tables.Employees.EmployeesPath;
 import com.marcato.springmarcatoerp.entity.tables.records.RoleRecord;
 
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
-import org.jooq.Identity;
 import org.jooq.InverseForeignKey;
 import org.jooq.Name;
 import org.jooq.Path;
@@ -46,7 +42,7 @@ public class Role extends TableImpl<RoleRecord> {
     private static final long serialVersionUID = 1L;
 
     /**
-     * The reference instance of <code>erp_marcato.role</code>
+     * The reference instance of <code>erp_marcato.Role</code>
      */
     public static final Role ROLE = new Role();
 
@@ -59,24 +55,24 @@ public class Role extends TableImpl<RoleRecord> {
     }
 
     /**
-     * The column <code>erp_marcato.role.id</code>.
+     * The column <code>erp_marcato.Role.id</code>.
      */
-    public final TableField<RoleRecord, Long> ID = createField(DSL.name("id"), SQLDataType.BIGINT.nullable(false).identity(true), this, "");
+    public final TableField<RoleRecord, Integer> ID = createField(DSL.name("id"), SQLDataType.INTEGER.nullable(false).defaultValue(DSL.field(DSL.raw("nextval('erp_marcato.\"Role_id_seq\"'::regclass)"), SQLDataType.INTEGER)), this, "");
 
     /**
-     * The column <code>erp_marcato.role.title</code>.
+     * The column <code>erp_marcato.Role.title</code>.
      */
-    public final TableField<RoleRecord, String> TITLE = createField(DSL.name("title"), SQLDataType.VARCHAR(50).nullable(false), this, "");
+    public final TableField<RoleRecord, String> TITLE = createField(DSL.name("title"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
-     * The column <code>erp_marcato.role.description</code>.
+     * The column <code>erp_marcato.Role.description</code>.
      */
-    public final TableField<RoleRecord, String> DESCRIPTION = createField(DSL.name("description"), SQLDataType.VARCHAR(255), this, "");
+    public final TableField<RoleRecord, String> DESCRIPTION = createField(DSL.name("description"), SQLDataType.CLOB, this, "");
 
     /**
-     * The column <code>erp_marcato.role.department_id</code>.
+     * The column <code>erp_marcato.Role.level</code>.
      */
-    public final TableField<RoleRecord, Integer> DEPARTMENT_ID = createField(DSL.name("department_id"), SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<RoleRecord, String> LEVEL = createField(DSL.name("level"), SQLDataType.VARCHAR(100), this, "");
 
     private Role(Name alias, Table<RoleRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
@@ -87,24 +83,24 @@ public class Role extends TableImpl<RoleRecord> {
     }
 
     /**
-     * Create an aliased <code>erp_marcato.role</code> table reference
+     * Create an aliased <code>erp_marcato.Role</code> table reference
      */
     public Role(String alias) {
         this(DSL.name(alias), ROLE);
     }
 
     /**
-     * Create an aliased <code>erp_marcato.role</code> table reference
+     * Create an aliased <code>erp_marcato.Role</code> table reference
      */
     public Role(Name alias) {
         this(alias, ROLE);
     }
 
     /**
-     * Create a <code>erp_marcato.role</code> table reference
+     * Create a <code>erp_marcato.Role</code> table reference
      */
     public Role() {
-        this(DSL.name("role"), null);
+        this(DSL.name("Role"), null);
     }
 
     public <O extends Record> Role(Table<O> path, ForeignKey<O, RoleRecord> childPath, InverseForeignKey<O, RoleRecord> parentPath) {
@@ -146,42 +142,19 @@ public class Role extends TableImpl<RoleRecord> {
     }
 
     @Override
-    public Identity<RoleRecord, Long> getIdentity() {
-        return (Identity<RoleRecord, Long>) super.getIdentity();
-    }
-
-    @Override
     public UniqueKey<RoleRecord> getPrimaryKey() {
         return Keys.ROLE_PKEY;
-    }
-
-    @Override
-    public List<ForeignKey<RoleRecord, ?>> getReferences() {
-        return Arrays.asList(Keys.ROLE__FK_ROLE_DEPARTMENT_ID);
-    }
-
-    private transient DepartmentPath _department;
-
-    /**
-     * Get the implicit join path to the <code>erp_marcato.department</code>
-     * table.
-     */
-    public DepartmentPath department() {
-        if (_department == null)
-            _department = new DepartmentPath(this, Keys.ROLE__FK_ROLE_DEPARTMENT_ID, null);
-
-        return _department;
     }
 
     private transient EmployeesPath _employees;
 
     /**
      * Get the implicit to-many join path to the
-     * <code>erp_marcato.employees</code> table
+     * <code>erp_marcato.Employees</code> table
      */
     public EmployeesPath employees() {
         if (_employees == null)
-            _employees = new EmployeesPath(this, null, Keys.EMPLOYEES__FK_ROLE_ID.getInverseKey());
+            _employees = new EmployeesPath(this, null, Keys.EMPLOYEES__FK_ROLE.getInverseKey());
 
         return _employees;
     }

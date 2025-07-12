@@ -19,56 +19,56 @@ public class EmployeesIdentifierRecord extends UpdatableRecordImpl<EmployeesIden
     private static final long serialVersionUID = 1L;
 
     /**
-     * Setter for <code>erp_marcato.employees_identifier.id</code>.
+     * Setter for <code>erp_marcato.Employees_Identifier.id</code>.
      */
-    public void setId(Long value) {
+    public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>erp_marcato.employees_identifier.id</code>.
+     * Getter for <code>erp_marcato.Employees_Identifier.id</code>.
      */
-    public Long getId() {
-        return (Long) get(0);
+    public Integer getId() {
+        return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>erp_marcato.employees_identifier.employee_id</code>.
+     * Setter for <code>erp_marcato.Employees_Identifier.employeeId</code>.
      */
-    public void setEmployeeId(Integer value) {
+    public void setEmployeeid(Integer value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>erp_marcato.employees_identifier.employee_id</code>.
+     * Getter for <code>erp_marcato.Employees_Identifier.employeeId</code>.
      */
-    public Integer getEmployeeId() {
+    public Integer getEmployeeid() {
         return (Integer) get(1);
     }
 
     /**
-     * Setter for <code>erp_marcato.employees_identifier.type</code>.
+     * Setter for <code>erp_marcato.Employees_Identifier.type</code>.
      */
     public void setType(String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>erp_marcato.employees_identifier.type</code>.
+     * Getter for <code>erp_marcato.Employees_Identifier.type</code>.
      */
     public String getType() {
         return (String) get(2);
     }
 
     /**
-     * Setter for <code>erp_marcato.employees_identifier.identifier</code>.
+     * Setter for <code>erp_marcato.Employees_Identifier.identifier</code>.
      */
     public void setIdentifier(String value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>erp_marcato.employees_identifier.identifier</code>.
+     * Getter for <code>erp_marcato.Employees_Identifier.identifier</code>.
      */
     public String getIdentifier() {
         return (String) get(3);
@@ -79,7 +79,7 @@ public class EmployeesIdentifierRecord extends UpdatableRecordImpl<EmployeesIden
     // -------------------------------------------------------------------------
 
     @Override
-    public Record1<Long> key() {
+    public Record1<Integer> key() {
         return (Record1) super.key();
     }
 
@@ -97,11 +97,11 @@ public class EmployeesIdentifierRecord extends UpdatableRecordImpl<EmployeesIden
     /**
      * Create a detached, initialised EmployeesIdentifierRecord
      */
-    public EmployeesIdentifierRecord(Long id, Integer employeeId, String type, String identifier) {
+    public EmployeesIdentifierRecord(Integer id, Integer employeeid, String type, String identifier) {
         super(EmployeesIdentifier.EMPLOYEES_IDENTIFIER);
 
         setId(id);
-        setEmployeeId(employeeId);
+        setEmployeeid(employeeid);
         setType(type);
         setIdentifier(identifier);
         resetTouchedOnNotNull();
@@ -115,7 +115,7 @@ public class EmployeesIdentifierRecord extends UpdatableRecordImpl<EmployeesIden
 
         if (value != null) {
             setId(value.getId());
-            setEmployeeId(value.getEmployeeId());
+            setEmployeeid(value.getEmployeeid());
             setType(value.getType());
             setIdentifier(value.getIdentifier());
             resetTouchedOnNotNull();

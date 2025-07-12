@@ -4,40 +4,43 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.*;
 
-import com.marcato.springmarcatoerp.entity.tables.UserErp;
-import com.marcato.springmarcatoerp.entity.tables.pojos.UserErpPojo;
-import com.marcato.springmarcatoerp.entity.tables.records.UserErpRecord;
-import org.jooq.DSLContext;
-import org.springframework.scheduling.annotation.Async;
+import com.marcato.springmarcatoerp.DTO.User.UserDTO;
+import com.marcato.springmarcatoerp.entity.tables.pojos.UsererpPojo;
+import com.marcato.springmarcatoerp.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
 
-    private final DSLContext create;
+    private final UserRepository userRepository;
+    Logger logger = LoggerFactory.getLogger(UserService.class);
 
-    public UserService(DSLContext dslContext){
-        this.create = dslContext;
-    }
-    @Async
-    public CompletableFuture<Optional<UserErpRecord>> getUserErpById(int id){
-        return CompletableFuture.completedFuture(Optional.ofNullable
-                (create.selectFrom(UserErp.USERERP).where(UserErp.USERERP.ID.eq(id)).fetchOne()));
-    }
-    @Async
-    public CompletableFuture<Optional<UserErpRecord>> getUserByUUID(UUID uuid){
-        return CompletableFuture.completedFuture(Optional.ofNullable
-                (create.selectFrom(UserErp.USERERP).where(UserErp.USERERP.USER_UUID.eq(uuid)).fetchOne()));
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
-    @Async
-    public CompletableFuture<Integer> createUser(UserErpPojo userErpPojo){
-            UserErpRecord userErpRecord = create.newRecord(UserErp.USERERP);
-            userErpRecord.setUsername(userErpPojo.getUsername());
-            userErpRecord.setCreatedAt(userErpPojo.getCreatedAt());
-            userErpRecord.setFullName(userErpPojo.getFullName());
-            userErpRecord.setUserUuid(userErpPojo.getUserUuid());
-        return CompletableFuture.completedFuture(userErpRecord.store());
+    public Optional<UserDTO>findUserById(Integer id) {
+
+        Optional<UsererpPojo>userResponse = userRepository.getUserErpById(id).join();
+        if(userResponse.isEmpty()){
+            return Optional.empty();
+        }
+        return Optional.of(UserDTO.fromPojo(userResponse.get()));
+
     }
 
+    public Optional<UserDTO>findUserByUUID(UUID uuid) {
+        try{
+            Future<Optional<UsererpPojo>>userResponse = userRepository.getUserByUUID(uuid);
+            if(userResponse.get().isEmpty()){
+                return Optional.empty();
+            }
+            return Optional.of(UserDTO.fromPojo(userResponse.get().get()));
+        } catch (Exception e){
+            logger.error(e.getMessage());
+            return Optional.empty();
+        }
+    }
 }

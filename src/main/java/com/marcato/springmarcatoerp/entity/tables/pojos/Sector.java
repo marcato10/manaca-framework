@@ -18,7 +18,7 @@ public class Sector implements Serializable {
     private Integer id;
     private String title;
     private String description;
-    private Integer departmentId;
+    private Integer departmentid;
 
     public Sector() {}
 
@@ -26,75 +26,75 @@ public class Sector implements Serializable {
         this.id = value.id;
         this.title = value.title;
         this.description = value.description;
-        this.departmentId = value.departmentId;
+        this.departmentid = value.departmentid;
     }
 
     public Sector(
         Integer id,
         String title,
         String description,
-        Integer departmentId
+        Integer departmentid
     ) {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.departmentId = departmentId;
+        this.departmentid = departmentid;
     }
 
     /**
-     * Getter for <code>erp_marcato.sector.id</code>.
+     * Getter for <code>erp_marcato.Sector.id</code>.
      */
     public Integer getId() {
         return this.id;
     }
 
     /**
-     * Setter for <code>erp_marcato.sector.id</code>.
+     * Setter for <code>erp_marcato.Sector.id</code>.
      */
     public void setId(Integer id) {
         this.id = id;
     }
 
     /**
-     * Getter for <code>erp_marcato.sector.title</code>.
+     * Getter for <code>erp_marcato.Sector.title</code>.
      */
     public String getTitle() {
         return this.title;
     }
 
     /**
-     * Setter for <code>erp_marcato.sector.title</code>.
+     * Setter for <code>erp_marcato.Sector.title</code>.
      */
     public void setTitle(String title) {
         this.title = title;
     }
 
     /**
-     * Getter for <code>erp_marcato.sector.description</code>.
+     * Getter for <code>erp_marcato.Sector.description</code>.
      */
     public String getDescription() {
         return this.description;
     }
 
     /**
-     * Setter for <code>erp_marcato.sector.description</code>.
+     * Setter for <code>erp_marcato.Sector.description</code>.
      */
     public void setDescription(String description) {
         this.description = description;
     }
 
     /**
-     * Getter for <code>erp_marcato.sector.department_id</code>.
+     * Getter for <code>erp_marcato.Sector.departmentId</code>.
      */
-    public Integer getDepartmentId() {
-        return this.departmentId;
+    public Integer getDepartmentid() {
+        return this.departmentid;
     }
 
     /**
-     * Setter for <code>erp_marcato.sector.department_id</code>.
+     * Setter for <code>erp_marcato.Sector.departmentId</code>.
      */
-    public void setDepartmentId(Integer departmentId) {
-        this.departmentId = departmentId;
+    public void setDepartmentid(Integer departmentid) {
+        this.departmentid = departmentid;
     }
 
     @Override
@@ -124,11 +124,11 @@ public class Sector implements Serializable {
         }
         else if (!this.description.equals(other.description))
             return false;
-        if (this.departmentId == null) {
-            if (other.departmentId != null)
+        if (this.departmentid == null) {
+            if (other.departmentid != null)
                 return false;
         }
-        else if (!this.departmentId.equals(other.departmentId))
+        else if (!this.departmentid.equals(other.departmentid))
             return false;
         return true;
     }
@@ -140,7 +140,7 @@ public class Sector implements Serializable {
         result = prime * result + ((this.id == null) ? 0 : this.id.hashCode());
         result = prime * result + ((this.title == null) ? 0 : this.title.hashCode());
         result = prime * result + ((this.description == null) ? 0 : this.description.hashCode());
-        result = prime * result + ((this.departmentId == null) ? 0 : this.departmentId.hashCode());
+        result = prime * result + ((this.departmentid == null) ? 0 : this.departmentid.hashCode());
         return result;
     }
 
@@ -151,7 +151,7 @@ public class Sector implements Serializable {
         sb.append(id);
         sb.append(", ").append(title);
         sb.append(", ").append(description);
-        sb.append(", ").append(departmentId);
+        sb.append(", ").append(departmentid);
 
         sb.append(")");
         return sb.toString();

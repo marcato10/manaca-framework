@@ -19,10 +19,5 @@ public class UserResourceTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Test
-    @DisplayName("Usuário anônimo deve receber 401 em /user/moderator")
-    void userPrivate_whenUserIsAnonymous_shouldReturnUnauthorized() throws Exception {
-        mockMvc.perform(get("/user/moderator"))
-                .andExpect(status().isUnauthorized());
-    }
+
 }

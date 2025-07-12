@@ -1,6 +1,7 @@
 package com.marcato.springmarcatoerp.DTO.User;
 
-import com.marcato.springmarcatoerp.entity.tables.records.UserErpRecord;
+import com.marcato.springmarcatoerp.entity.tables.pojos.UsererpPojo;
+import com.marcato.springmarcatoerp.entity.tables.records.UsererpRecord;
 
 import java.nio.charset.StandardCharsets;
 import java.time.OffsetDateTime;
@@ -24,15 +25,27 @@ public record UserDTO(Integer id,
         return UUID.nameUUIDFromBytes(idPart.getBytes(StandardCharsets.UTF_8));
     }
 
+    public static UserDTO fromPojo(UsererpPojo pojo) {
+        if (pojo == null) {
+            return null;
+        }
 
-    public static UserDTO fromRecord(UserErpRecord record) {
+        return new UserDTO(
+                pojo.getId(),
+                pojo.getUserUuid(),
+                pojo.getCreatedat(), // Note que o getter do POJO é usado aqui
+                pojo.getUsername(),
+                pojo.getFullName()
+        );
+    }
+    public static UserDTO fromRecord(UsererpRecord record) {
         if (record == null) {
             return null;
         }
         return new UserDTO(
                 record.getId(),
                 record.getUserUuid(),
-                record.getCreatedAt(),
+                record.getCreatedat(),
                 record.getUsername(),
                 record.getFullName()
         );

@@ -5,6 +5,7 @@ package com.marcato.springmarcatoerp.entity.tables;
 
 
 import com.marcato.springmarcatoerp.entity.ErpMarcato;
+import com.marcato.springmarcatoerp.entity.Indexes;
 import com.marcato.springmarcatoerp.entity.Keys;
 import com.marcato.springmarcatoerp.entity.tables.Employees.EmployeesPath;
 import com.marcato.springmarcatoerp.entity.tables.records.EmployeesIdentifierRecord;
@@ -13,11 +14,10 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import org.jooq.Check;
 import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
-import org.jooq.Identity;
+import org.jooq.Index;
 import org.jooq.InverseForeignKey;
 import org.jooq.Name;
 import org.jooq.Path;
@@ -33,7 +33,6 @@ import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
-import org.jooq.impl.Internal;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
@@ -47,7 +46,7 @@ public class EmployeesIdentifier extends TableImpl<EmployeesIdentifierRecord> {
     private static final long serialVersionUID = 1L;
 
     /**
-     * The reference instance of <code>erp_marcato.employees_identifier</code>
+     * The reference instance of <code>erp_marcato.Employees_Identifier</code>
      */
     public static final EmployeesIdentifier EMPLOYEES_IDENTIFIER = new EmployeesIdentifier();
 
@@ -60,24 +59,24 @@ public class EmployeesIdentifier extends TableImpl<EmployeesIdentifierRecord> {
     }
 
     /**
-     * The column <code>erp_marcato.employees_identifier.id</code>.
+     * The column <code>erp_marcato.Employees_Identifier.id</code>.
      */
-    public final TableField<EmployeesIdentifierRecord, Long> ID = createField(DSL.name("id"), SQLDataType.BIGINT.nullable(false).identity(true), this, "");
+    public final TableField<EmployeesIdentifierRecord, Integer> ID = createField(DSL.name("id"), SQLDataType.INTEGER.nullable(false).defaultValue(DSL.field(DSL.raw("nextval('erp_marcato.\"Employees_Identifier_id_seq\"'::regclass)"), SQLDataType.INTEGER)), this, "");
 
     /**
-     * The column <code>erp_marcato.employees_identifier.employee_id</code>.
+     * The column <code>erp_marcato.Employees_Identifier.employeeId</code>.
      */
-    public final TableField<EmployeesIdentifierRecord, Integer> EMPLOYEE_ID = createField(DSL.name("employee_id"), SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<EmployeesIdentifierRecord, Integer> EMPLOYEEID = createField(DSL.name("employeeId"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>erp_marcato.employees_identifier.type</code>.
+     * The column <code>erp_marcato.Employees_Identifier.type</code>.
      */
-    public final TableField<EmployeesIdentifierRecord, String> TYPE = createField(DSL.name("type"), SQLDataType.VARCHAR(10).nullable(false), this, "");
+    public final TableField<EmployeesIdentifierRecord, String> TYPE = createField(DSL.name("type"), SQLDataType.VARCHAR(50).nullable(false), this, "");
 
     /**
-     * The column <code>erp_marcato.employees_identifier.identifier</code>.
+     * The column <code>erp_marcato.Employees_Identifier.identifier</code>.
      */
-    public final TableField<EmployeesIdentifierRecord, String> IDENTIFIER = createField(DSL.name("identifier"), SQLDataType.VARCHAR(50).nullable(false), this, "");
+    public final TableField<EmployeesIdentifierRecord, String> IDENTIFIER = createField(DSL.name("identifier"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     private EmployeesIdentifier(Name alias, Table<EmployeesIdentifierRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
@@ -88,7 +87,7 @@ public class EmployeesIdentifier extends TableImpl<EmployeesIdentifierRecord> {
     }
 
     /**
-     * Create an aliased <code>erp_marcato.employees_identifier</code> table
+     * Create an aliased <code>erp_marcato.Employees_Identifier</code> table
      * reference
      */
     public EmployeesIdentifier(String alias) {
@@ -96,7 +95,7 @@ public class EmployeesIdentifier extends TableImpl<EmployeesIdentifierRecord> {
     }
 
     /**
-     * Create an aliased <code>erp_marcato.employees_identifier</code> table
+     * Create an aliased <code>erp_marcato.Employees_Identifier</code> table
      * reference
      */
     public EmployeesIdentifier(Name alias) {
@@ -104,10 +103,10 @@ public class EmployeesIdentifier extends TableImpl<EmployeesIdentifierRecord> {
     }
 
     /**
-     * Create a <code>erp_marcato.employees_identifier</code> table reference
+     * Create a <code>erp_marcato.Employees_Identifier</code> table reference
      */
     public EmployeesIdentifier() {
-        this(DSL.name("employees_identifier"), null);
+        this(DSL.name("Employees_Identifier"), null);
     }
 
     public <O extends Record> EmployeesIdentifier(Table<O> path, ForeignKey<O, EmployeesIdentifierRecord> childPath, InverseForeignKey<O, EmployeesIdentifierRecord> parentPath) {
@@ -149,8 +148,8 @@ public class EmployeesIdentifier extends TableImpl<EmployeesIdentifierRecord> {
     }
 
     @Override
-    public Identity<EmployeesIdentifierRecord, Long> getIdentity() {
-        return (Identity<EmployeesIdentifierRecord, Long>) super.getIdentity();
+    public List<Index> getIndexes() {
+        return Arrays.asList(Indexes.EMPLOYEES_IDENTIFIER_EMPLOYEEID_IDX);
     }
 
     @Override
@@ -160,33 +159,25 @@ public class EmployeesIdentifier extends TableImpl<EmployeesIdentifierRecord> {
 
     @Override
     public List<UniqueKey<EmployeesIdentifierRecord>> getUniqueKeys() {
-        return Arrays.asList(Keys.UQ_IDENTIFIER);
+        return Arrays.asList(Keys.EMPLOYEES_IDENTIFIER_EMPLOYEEID_TYPE_KEY);
     }
 
     @Override
     public List<ForeignKey<EmployeesIdentifierRecord, ?>> getReferences() {
-        return Arrays.asList(Keys.EMPLOYEES_IDENTIFIER__FK_EMPLOYEES_ID);
+        return Arrays.asList(Keys.EMPLOYEES_IDENTIFIER__FK_EMPLOYEE);
     }
 
     private transient EmployeesPath _employees;
 
     /**
-     * Get the implicit join path to the <code>erp_marcato.employees</code>
+     * Get the implicit join path to the <code>erp_marcato.Employees</code>
      * table.
      */
     public EmployeesPath employees() {
         if (_employees == null)
-            _employees = new EmployeesPath(this, Keys.EMPLOYEES_IDENTIFIER__FK_EMPLOYEES_ID, null);
+            _employees = new EmployeesPath(this, Keys.EMPLOYEES_IDENTIFIER__FK_EMPLOYEE, null);
 
         return _employees;
-    }
-
-    @Override
-    public List<Check<EmployeesIdentifierRecord>> getChecks() {
-        return Arrays.asList(
-            Internal.createCheck(this, DSL.name("check_identifier_rules"), "(((((type)::text = 'CPF'::text) AND (length((identifier)::text) = 11)) OR (((type)::text = 'CNPJ'::text) AND (length((identifier)::text) = 14))))", true),
-            Internal.createCheck(this, DSL.name("check_identifier_type"), "(((type)::text = ANY ((ARRAY['CPF'::character varying, 'CNPJ'::character varying])::text[])))", true)
-        );
     }
 
     @Override

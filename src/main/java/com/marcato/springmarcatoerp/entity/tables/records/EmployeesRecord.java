@@ -4,10 +4,9 @@
 package com.marcato.springmarcatoerp.entity.tables.records;
 
 
-import com.marcato.springmarcatoerp.entity.enums.Status;
 import com.marcato.springmarcatoerp.entity.tables.Employees;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 import org.jooq.Record1;
 import org.jooq.impl.UpdatableRecordImpl;
@@ -22,87 +21,101 @@ public class EmployeesRecord extends UpdatableRecordImpl<EmployeesRecord> {
     private static final long serialVersionUID = 1L;
 
     /**
-     * Setter for <code>erp_marcato.employees.id</code>.
+     * Setter for <code>erp_marcato.Employees.id</code>.
      */
-    public void setId(Long value) {
+    public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>erp_marcato.employees.id</code>.
+     * Getter for <code>erp_marcato.Employees.id</code>.
      */
-    public Long getId() {
-        return (Long) get(0);
+    public Integer getId() {
+        return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>erp_marcato.employees.full_name</code>.
+     * Setter for <code>erp_marcato.Employees.fullName</code>.
      */
-    public void setFullName(String value) {
+    public void setFullname(String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>erp_marcato.employees.full_name</code>.
+     * Getter for <code>erp_marcato.Employees.fullName</code>.
      */
-    public String getFullName() {
+    public String getFullname() {
         return (String) get(1);
     }
 
     /**
-     * Setter for <code>erp_marcato.employees.hire_date</code>.
+     * Setter for <code>erp_marcato.Employees.hireDate</code>.
      */
-    public void setHireDate(LocalDateTime value) {
+    public void setHiredate(OffsetDateTime value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>erp_marcato.employees.hire_date</code>.
+     * Getter for <code>erp_marcato.Employees.hireDate</code>.
      */
-    public LocalDateTime getHireDate() {
-        return (LocalDateTime) get(2);
+    public OffsetDateTime getHiredate() {
+        return (OffsetDateTime) get(2);
     }
 
     /**
-     * Setter for <code>erp_marcato.employees.role_id</code>.
+     * Setter for <code>erp_marcato.Employees.status</code>.
      */
-    public void setRoleId(Integer value) {
+    public void setStatus(String value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>erp_marcato.employees.role_id</code>.
+     * Getter for <code>erp_marcato.Employees.status</code>.
      */
-    public Integer getRoleId() {
-        return (Integer) get(3);
+    public String getStatus() {
+        return (String) get(3);
     }
 
     /**
-     * Setter for <code>erp_marcato.employees.situation</code>.
+     * Setter for <code>erp_marcato.Employees.roleId</code>.
      */
-    public void setSituation(Status value) {
+    public void setRoleid(Integer value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>erp_marcato.employees.situation</code>.
+     * Getter for <code>erp_marcato.Employees.roleId</code>.
      */
-    public Status getSituation() {
-        return (Status) get(4);
+    public Integer getRoleid() {
+        return (Integer) get(4);
     }
 
     /**
-     * Setter for <code>erp_marcato.employees.sector_id</code>.
+     * Setter for <code>erp_marcato.Employees.sectorId</code>.
      */
-    public void setSectorId(Long value) {
+    public void setSectorid(Integer value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>erp_marcato.employees.sector_id</code>.
+     * Getter for <code>erp_marcato.Employees.sectorId</code>.
      */
-    public Long getSectorId() {
-        return (Long) get(5);
+    public Integer getSectorid() {
+        return (Integer) get(5);
+    }
+
+    /**
+     * Setter for <code>erp_marcato.Employees.userErpId</code>.
+     */
+    public void setUsererpid(Integer value) {
+        set(6, value);
+    }
+
+    /**
+     * Getter for <code>erp_marcato.Employees.userErpId</code>.
+     */
+    public Integer getUsererpid() {
+        return (Integer) get(6);
     }
 
     // -------------------------------------------------------------------------
@@ -110,7 +123,7 @@ public class EmployeesRecord extends UpdatableRecordImpl<EmployeesRecord> {
     // -------------------------------------------------------------------------
 
     @Override
-    public Record1<Long> key() {
+    public Record1<Integer> key() {
         return (Record1) super.key();
     }
 
@@ -128,15 +141,16 @@ public class EmployeesRecord extends UpdatableRecordImpl<EmployeesRecord> {
     /**
      * Create a detached, initialised EmployeesRecord
      */
-    public EmployeesRecord(Long id, String fullName, LocalDateTime hireDate, Integer roleId, Status situation, Long sectorId) {
+    public EmployeesRecord(Integer id, String fullname, OffsetDateTime hiredate, String status, Integer roleid, Integer sectorid, Integer usererpid) {
         super(Employees.EMPLOYEES);
 
         setId(id);
-        setFullName(fullName);
-        setHireDate(hireDate);
-        setRoleId(roleId);
-        setSituation(situation);
-        setSectorId(sectorId);
+        setFullname(fullname);
+        setHiredate(hiredate);
+        setStatus(status);
+        setRoleid(roleid);
+        setSectorid(sectorid);
+        setUsererpid(usererpid);
         resetTouchedOnNotNull();
     }
 
@@ -148,11 +162,12 @@ public class EmployeesRecord extends UpdatableRecordImpl<EmployeesRecord> {
 
         if (value != null) {
             setId(value.getId());
-            setFullName(value.getFullName());
-            setHireDate(value.getHireDate());
-            setRoleId(value.getRoleId());
-            setSituation(value.getSituation());
-            setSectorId(value.getSectorId());
+            setFullname(value.getFullname());
+            setHiredate(value.getHiredate());
+            setStatus(value.getStatus());
+            setRoleid(value.getRoleid());
+            setSectorid(value.getSectorid());
+            setUsererpid(value.getUsererpid());
             resetTouchedOnNotNull();
         }
     }

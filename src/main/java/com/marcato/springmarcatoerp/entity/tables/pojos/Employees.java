@@ -4,10 +4,8 @@
 package com.marcato.springmarcatoerp.entity.tables.pojos;
 
 
-import com.marcato.springmarcatoerp.entity.enums.Status;
-
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 
 /**
@@ -18,122 +16,140 @@ public class Employees implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Long id;
-    private String fullName;
-    private LocalDateTime hireDate;
-    private Integer roleId;
-    private Status situation;
-    private Long sectorId;
+    private Integer id;
+    private String fullname;
+    private OffsetDateTime hiredate;
+    private String status;
+    private Integer roleid;
+    private Integer sectorid;
+    private Integer usererpid;
 
     public Employees() {}
 
     public Employees(Employees value) {
         this.id = value.id;
-        this.fullName = value.fullName;
-        this.hireDate = value.hireDate;
-        this.roleId = value.roleId;
-        this.situation = value.situation;
-        this.sectorId = value.sectorId;
+        this.fullname = value.fullname;
+        this.hiredate = value.hiredate;
+        this.status = value.status;
+        this.roleid = value.roleid;
+        this.sectorid = value.sectorid;
+        this.usererpid = value.usererpid;
     }
 
     public Employees(
-        Long id,
-        String fullName,
-        LocalDateTime hireDate,
-        Integer roleId,
-        Status situation,
-        Long sectorId
+        Integer id,
+        String fullname,
+        OffsetDateTime hiredate,
+        String status,
+        Integer roleid,
+        Integer sectorid,
+        Integer usererpid
     ) {
         this.id = id;
-        this.fullName = fullName;
-        this.hireDate = hireDate;
-        this.roleId = roleId;
-        this.situation = situation;
-        this.sectorId = sectorId;
+        this.fullname = fullname;
+        this.hiredate = hiredate;
+        this.status = status;
+        this.roleid = roleid;
+        this.sectorid = sectorid;
+        this.usererpid = usererpid;
     }
 
     /**
-     * Getter for <code>erp_marcato.employees.id</code>.
+     * Getter for <code>erp_marcato.Employees.id</code>.
      */
-    public Long getId() {
+    public Integer getId() {
         return this.id;
     }
 
     /**
-     * Setter for <code>erp_marcato.employees.id</code>.
+     * Setter for <code>erp_marcato.Employees.id</code>.
      */
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
     /**
-     * Getter for <code>erp_marcato.employees.full_name</code>.
+     * Getter for <code>erp_marcato.Employees.fullName</code>.
      */
-    public String getFullName() {
-        return this.fullName;
+    public String getFullname() {
+        return this.fullname;
     }
 
     /**
-     * Setter for <code>erp_marcato.employees.full_name</code>.
+     * Setter for <code>erp_marcato.Employees.fullName</code>.
      */
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
     /**
-     * Getter for <code>erp_marcato.employees.hire_date</code>.
+     * Getter for <code>erp_marcato.Employees.hireDate</code>.
      */
-    public LocalDateTime getHireDate() {
-        return this.hireDate;
+    public OffsetDateTime getHiredate() {
+        return this.hiredate;
     }
 
     /**
-     * Setter for <code>erp_marcato.employees.hire_date</code>.
+     * Setter for <code>erp_marcato.Employees.hireDate</code>.
      */
-    public void setHireDate(LocalDateTime hireDate) {
-        this.hireDate = hireDate;
+    public void setHiredate(OffsetDateTime hiredate) {
+        this.hiredate = hiredate;
     }
 
     /**
-     * Getter for <code>erp_marcato.employees.role_id</code>.
+     * Getter for <code>erp_marcato.Employees.status</code>.
      */
-    public Integer getRoleId() {
-        return this.roleId;
+    public String getStatus() {
+        return this.status;
     }
 
     /**
-     * Setter for <code>erp_marcato.employees.role_id</code>.
+     * Setter for <code>erp_marcato.Employees.status</code>.
      */
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     /**
-     * Getter for <code>erp_marcato.employees.situation</code>.
+     * Getter for <code>erp_marcato.Employees.roleId</code>.
      */
-    public Status getSituation() {
-        return this.situation;
+    public Integer getRoleid() {
+        return this.roleid;
     }
 
     /**
-     * Setter for <code>erp_marcato.employees.situation</code>.
+     * Setter for <code>erp_marcato.Employees.roleId</code>.
      */
-    public void setSituation(Status situation) {
-        this.situation = situation;
+    public void setRoleid(Integer roleid) {
+        this.roleid = roleid;
     }
 
     /**
-     * Getter for <code>erp_marcato.employees.sector_id</code>.
+     * Getter for <code>erp_marcato.Employees.sectorId</code>.
      */
-    public Long getSectorId() {
-        return this.sectorId;
+    public Integer getSectorid() {
+        return this.sectorid;
     }
 
     /**
-     * Setter for <code>erp_marcato.employees.sector_id</code>.
+     * Setter for <code>erp_marcato.Employees.sectorId</code>.
      */
-    public void setSectorId(Long sectorId) {
-        this.sectorId = sectorId;
+    public void setSectorid(Integer sectorid) {
+        this.sectorid = sectorid;
+    }
+
+    /**
+     * Getter for <code>erp_marcato.Employees.userErpId</code>.
+     */
+    public Integer getUsererpid() {
+        return this.usererpid;
+    }
+
+    /**
+     * Setter for <code>erp_marcato.Employees.userErpId</code>.
+     */
+    public void setUsererpid(Integer usererpid) {
+        this.usererpid = usererpid;
     }
 
     @Override
@@ -151,35 +167,41 @@ public class Employees implements Serializable {
         }
         else if (!this.id.equals(other.id))
             return false;
-        if (this.fullName == null) {
-            if (other.fullName != null)
+        if (this.fullname == null) {
+            if (other.fullname != null)
                 return false;
         }
-        else if (!this.fullName.equals(other.fullName))
+        else if (!this.fullname.equals(other.fullname))
             return false;
-        if (this.hireDate == null) {
-            if (other.hireDate != null)
+        if (this.hiredate == null) {
+            if (other.hiredate != null)
                 return false;
         }
-        else if (!this.hireDate.equals(other.hireDate))
+        else if (!this.hiredate.equals(other.hiredate))
             return false;
-        if (this.roleId == null) {
-            if (other.roleId != null)
+        if (this.status == null) {
+            if (other.status != null)
                 return false;
         }
-        else if (!this.roleId.equals(other.roleId))
+        else if (!this.status.equals(other.status))
             return false;
-        if (this.situation == null) {
-            if (other.situation != null)
+        if (this.roleid == null) {
+            if (other.roleid != null)
                 return false;
         }
-        else if (!this.situation.equals(other.situation))
+        else if (!this.roleid.equals(other.roleid))
             return false;
-        if (this.sectorId == null) {
-            if (other.sectorId != null)
+        if (this.sectorid == null) {
+            if (other.sectorid != null)
                 return false;
         }
-        else if (!this.sectorId.equals(other.sectorId))
+        else if (!this.sectorid.equals(other.sectorid))
+            return false;
+        if (this.usererpid == null) {
+            if (other.usererpid != null)
+                return false;
+        }
+        else if (!this.usererpid.equals(other.usererpid))
             return false;
         return true;
     }
@@ -189,11 +211,12 @@ public class Employees implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((this.id == null) ? 0 : this.id.hashCode());
-        result = prime * result + ((this.fullName == null) ? 0 : this.fullName.hashCode());
-        result = prime * result + ((this.hireDate == null) ? 0 : this.hireDate.hashCode());
-        result = prime * result + ((this.roleId == null) ? 0 : this.roleId.hashCode());
-        result = prime * result + ((this.situation == null) ? 0 : this.situation.hashCode());
-        result = prime * result + ((this.sectorId == null) ? 0 : this.sectorId.hashCode());
+        result = prime * result + ((this.fullname == null) ? 0 : this.fullname.hashCode());
+        result = prime * result + ((this.hiredate == null) ? 0 : this.hiredate.hashCode());
+        result = prime * result + ((this.status == null) ? 0 : this.status.hashCode());
+        result = prime * result + ((this.roleid == null) ? 0 : this.roleid.hashCode());
+        result = prime * result + ((this.sectorid == null) ? 0 : this.sectorid.hashCode());
+        result = prime * result + ((this.usererpid == null) ? 0 : this.usererpid.hashCode());
         return result;
     }
 
@@ -202,11 +225,12 @@ public class Employees implements Serializable {
         StringBuilder sb = new StringBuilder("Employees (");
 
         sb.append(id);
-        sb.append(", ").append(fullName);
-        sb.append(", ").append(hireDate);
-        sb.append(", ").append(roleId);
-        sb.append(", ").append(situation);
-        sb.append(", ").append(sectorId);
+        sb.append(", ").append(fullname);
+        sb.append(", ").append(hiredate);
+        sb.append(", ").append(status);
+        sb.append(", ").append(roleid);
+        sb.append(", ").append(sectorid);
+        sb.append(", ").append(usererpid);
 
         sb.append(")");
         return sb.toString();

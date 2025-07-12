@@ -40,11 +40,11 @@ networks:
       com.docker.network.bridge.host_binding_ipv4: "127.0.0.1"
   backend:
     driver: bridge
-    # internal: true # Considere tornar a rede backend interna
+    internal: true # Considere tornar a rede backend interna
     ipam:
       driver: default
       config:
-        - subnet: "192.168.0.0/24"
+        - subnet: "172.20.1.0/24"
 
 volumes:
   db-data:

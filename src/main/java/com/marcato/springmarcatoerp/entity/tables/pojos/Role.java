@@ -15,10 +15,10 @@ public class Role implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Long id;
+    private Integer id;
     private String title;
     private String description;
-    private Integer departmentId;
+    private String level;
 
     public Role() {}
 
@@ -26,75 +26,75 @@ public class Role implements Serializable {
         this.id = value.id;
         this.title = value.title;
         this.description = value.description;
-        this.departmentId = value.departmentId;
+        this.level = value.level;
     }
 
     public Role(
-        Long id,
+        Integer id,
         String title,
         String description,
-        Integer departmentId
+        String level
     ) {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.departmentId = departmentId;
+        this.level = level;
     }
 
     /**
-     * Getter for <code>erp_marcato.role.id</code>.
+     * Getter for <code>erp_marcato.Role.id</code>.
      */
-    public Long getId() {
+    public Integer getId() {
         return this.id;
     }
 
     /**
-     * Setter for <code>erp_marcato.role.id</code>.
+     * Setter for <code>erp_marcato.Role.id</code>.
      */
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
     /**
-     * Getter for <code>erp_marcato.role.title</code>.
+     * Getter for <code>erp_marcato.Role.title</code>.
      */
     public String getTitle() {
         return this.title;
     }
 
     /**
-     * Setter for <code>erp_marcato.role.title</code>.
+     * Setter for <code>erp_marcato.Role.title</code>.
      */
     public void setTitle(String title) {
         this.title = title;
     }
 
     /**
-     * Getter for <code>erp_marcato.role.description</code>.
+     * Getter for <code>erp_marcato.Role.description</code>.
      */
     public String getDescription() {
         return this.description;
     }
 
     /**
-     * Setter for <code>erp_marcato.role.description</code>.
+     * Setter for <code>erp_marcato.Role.description</code>.
      */
     public void setDescription(String description) {
         this.description = description;
     }
 
     /**
-     * Getter for <code>erp_marcato.role.department_id</code>.
+     * Getter for <code>erp_marcato.Role.level</code>.
      */
-    public Integer getDepartmentId() {
-        return this.departmentId;
+    public String getLevel() {
+        return this.level;
     }
 
     /**
-     * Setter for <code>erp_marcato.role.department_id</code>.
+     * Setter for <code>erp_marcato.Role.level</code>.
      */
-    public void setDepartmentId(Integer departmentId) {
-        this.departmentId = departmentId;
+    public void setLevel(String level) {
+        this.level = level;
     }
 
     @Override
@@ -124,11 +124,11 @@ public class Role implements Serializable {
         }
         else if (!this.description.equals(other.description))
             return false;
-        if (this.departmentId == null) {
-            if (other.departmentId != null)
+        if (this.level == null) {
+            if (other.level != null)
                 return false;
         }
-        else if (!this.departmentId.equals(other.departmentId))
+        else if (!this.level.equals(other.level))
             return false;
         return true;
     }
@@ -140,7 +140,7 @@ public class Role implements Serializable {
         result = prime * result + ((this.id == null) ? 0 : this.id.hashCode());
         result = prime * result + ((this.title == null) ? 0 : this.title.hashCode());
         result = prime * result + ((this.description == null) ? 0 : this.description.hashCode());
-        result = prime * result + ((this.departmentId == null) ? 0 : this.departmentId.hashCode());
+        result = prime * result + ((this.level == null) ? 0 : this.level.hashCode());
         return result;
     }
 
@@ -151,7 +151,7 @@ public class Role implements Serializable {
         sb.append(id);
         sb.append(", ").append(title);
         sb.append(", ").append(description);
-        sb.append(", ").append(departmentId);
+        sb.append(", ").append(level);
 
         sb.append(")");
         return sb.toString();

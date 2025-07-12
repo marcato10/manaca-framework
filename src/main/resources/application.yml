@@ -23,3 +23,7 @@ okta:
     issuer: https://dev-tpjedcct43j1eghk.us.auth0.com/
     audience: https://marcato.erp.com
     groups-claim: https://marcato.erp.com/groups
+springdoc:
+
+  api-docs:
+    enabled: true

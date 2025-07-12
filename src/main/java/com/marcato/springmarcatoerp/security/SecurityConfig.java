@@ -27,12 +27,9 @@ public class SecurityConfig {
 
     @Bean
     public JwtAuthenticationConverter customJwtAuthenticationConverter() {
-        JwtGrantedAuthoritiesConverter grantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
-        grantedAuthoritiesConverter.setAuthoritiesClaimName(GROUPS_CLAIM_NAME);
-        grantedAuthoritiesConverter.setAuthorityPrefix("");
-
         JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
-        jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(grantedAuthoritiesConverter);
+        jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(new CustomTokenAuthorities());
+
         return jwtAuthenticationConverter;
     }
 }

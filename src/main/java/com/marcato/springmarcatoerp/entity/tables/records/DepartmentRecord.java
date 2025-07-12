@@ -20,42 +20,42 @@ public class DepartmentRecord extends UpdatableRecordImpl<DepartmentRecord> {
     private static final long serialVersionUID = 1L;
 
     /**
-     * Setter for <code>erp_marcato.department.id</code>.
+     * Setter for <code>erp_marcato.Department.id</code>.
      */
     public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>erp_marcato.department.id</code>.
+     * Getter for <code>erp_marcato.Department.id</code>.
      */
     public Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>erp_marcato.department.title</code>.
+     * Setter for <code>erp_marcato.Department.title</code>.
      */
     public void setTitle(String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>erp_marcato.department.title</code>.
+     * Getter for <code>erp_marcato.Department.title</code>.
      */
     public String getTitle() {
         return (String) get(1);
     }
 
     /**
-     * Setter for <code>erp_marcato.department.description</code>.
+     * Setter for <code>erp_marcato.Department.description</code>.
      */
     public void setDescription(String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>erp_marcato.department.description</code>.
+     * Getter for <code>erp_marcato.Department.description</code>.
      */
     public String getDescription() {
         return (String) get(2);

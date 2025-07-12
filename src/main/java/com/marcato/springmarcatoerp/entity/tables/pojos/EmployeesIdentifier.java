@@ -15,8 +15,8 @@ public class EmployeesIdentifier implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Long id;
-    private Integer employeeId;
+    private Integer id;
+    private Integer employeeid;
     private String type;
     private String identifier;
 
@@ -24,74 +24,74 @@ public class EmployeesIdentifier implements Serializable {
 
     public EmployeesIdentifier(EmployeesIdentifier value) {
         this.id = value.id;
-        this.employeeId = value.employeeId;
+        this.employeeid = value.employeeid;
         this.type = value.type;
         this.identifier = value.identifier;
     }
 
     public EmployeesIdentifier(
-        Long id,
-        Integer employeeId,
+        Integer id,
+        Integer employeeid,
         String type,
         String identifier
     ) {
         this.id = id;
-        this.employeeId = employeeId;
+        this.employeeid = employeeid;
         this.type = type;
         this.identifier = identifier;
     }
 
     /**
-     * Getter for <code>erp_marcato.employees_identifier.id</code>.
+     * Getter for <code>erp_marcato.Employees_Identifier.id</code>.
      */
-    public Long getId() {
+    public Integer getId() {
         return this.id;
     }
 
     /**
-     * Setter for <code>erp_marcato.employees_identifier.id</code>.
+     * Setter for <code>erp_marcato.Employees_Identifier.id</code>.
      */
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
     /**
-     * Getter for <code>erp_marcato.employees_identifier.employee_id</code>.
+     * Getter for <code>erp_marcato.Employees_Identifier.employeeId</code>.
      */
-    public Integer getEmployeeId() {
-        return this.employeeId;
+    public Integer getEmployeeid() {
+        return this.employeeid;
     }
 
     /**
-     * Setter for <code>erp_marcato.employees_identifier.employee_id</code>.
+     * Setter for <code>erp_marcato.Employees_Identifier.employeeId</code>.
      */
-    public void setEmployeeId(Integer employeeId) {
-        this.employeeId = employeeId;
+    public void setEmployeeid(Integer employeeid) {
+        this.employeeid = employeeid;
     }
 
     /**
-     * Getter for <code>erp_marcato.employees_identifier.type</code>.
+     * Getter for <code>erp_marcato.Employees_Identifier.type</code>.
      */
     public String getType() {
         return this.type;
     }
 
     /**
-     * Setter for <code>erp_marcato.employees_identifier.type</code>.
+     * Setter for <code>erp_marcato.Employees_Identifier.type</code>.
      */
     public void setType(String type) {
         this.type = type;
     }
 
     /**
-     * Getter for <code>erp_marcato.employees_identifier.identifier</code>.
+     * Getter for <code>erp_marcato.Employees_Identifier.identifier</code>.
      */
     public String getIdentifier() {
         return this.identifier;
     }
 
     /**
-     * Setter for <code>erp_marcato.employees_identifier.identifier</code>.
+     * Setter for <code>erp_marcato.Employees_Identifier.identifier</code>.
      */
     public void setIdentifier(String identifier) {
         this.identifier = identifier;
@@ -112,11 +112,11 @@ public class EmployeesIdentifier implements Serializable {
         }
         else if (!this.id.equals(other.id))
             return false;
-        if (this.employeeId == null) {
-            if (other.employeeId != null)
+        if (this.employeeid == null) {
+            if (other.employeeid != null)
                 return false;
         }
-        else if (!this.employeeId.equals(other.employeeId))
+        else if (!this.employeeid.equals(other.employeeid))
             return false;
         if (this.type == null) {
             if (other.type != null)
@@ -138,7 +138,7 @@ public class EmployeesIdentifier implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((this.id == null) ? 0 : this.id.hashCode());
-        result = prime * result + ((this.employeeId == null) ? 0 : this.employeeId.hashCode());
+        result = prime * result + ((this.employeeid == null) ? 0 : this.employeeid.hashCode());
         result = prime * result + ((this.type == null) ? 0 : this.type.hashCode());
         result = prime * result + ((this.identifier == null) ? 0 : this.identifier.hashCode());
         return result;
@@ -149,7 +149,7 @@ public class EmployeesIdentifier implements Serializable {
         StringBuilder sb = new StringBuilder("EmployeesIdentifier (");
 
         sb.append(id);
-        sb.append(", ").append(employeeId);
+        sb.append(", ").append(employeeid);
         sb.append(", ").append(type);
         sb.append(", ").append(identifier);
 

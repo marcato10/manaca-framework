@@ -7,6 +7,10 @@ plugins {
     id("org.springdoc.openapi-gradle-plugin") version "1.9.0"
 }
 
+ext {
+    springdocVersion = "2.8.9"
+}
+
 group = 'com.marcato'
 version = '0.0.1-SNAPSHOT'
 
@@ -26,10 +30,15 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-jooq'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+    //Spring Docs
+    implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${springdocVersion}"
+    implementation "org.springdoc:springdoc-openapi-starter-common:${springdocVersion}"
 
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     //Spring Security
     implementation "org.springframework.boot:spring-boot-starter-security"
+    // ULID
+    implementation group: 'com.github.f4b6a3', name: 'ulid-creator', version: '5.2.3'
     //Auth 0
     implementation 'com.okta.spring:okta-spring-boot-starter:3.0.5'
     // UNIREST
@@ -75,8 +84,6 @@ jooq {
     }
 
 }
-
-
 
 tasks.named('test') {
     useJUnitPlatform()

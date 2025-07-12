@@ -19,59 +19,59 @@ public class RoleRecord extends UpdatableRecordImpl<RoleRecord> {
     private static final long serialVersionUID = 1L;
 
     /**
-     * Setter for <code>erp_marcato.role.id</code>.
+     * Setter for <code>erp_marcato.Role.id</code>.
      */
-    public void setId(Long value) {
+    public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>erp_marcato.role.id</code>.
+     * Getter for <code>erp_marcato.Role.id</code>.
      */
-    public Long getId() {
-        return (Long) get(0);
+    public Integer getId() {
+        return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>erp_marcato.role.title</code>.
+     * Setter for <code>erp_marcato.Role.title</code>.
      */
     public void setTitle(String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>erp_marcato.role.title</code>.
+     * Getter for <code>erp_marcato.Role.title</code>.
      */
     public String getTitle() {
         return (String) get(1);
     }
 
     /**
-     * Setter for <code>erp_marcato.role.description</code>.
+     * Setter for <code>erp_marcato.Role.description</code>.
      */
     public void setDescription(String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>erp_marcato.role.description</code>.
+     * Getter for <code>erp_marcato.Role.description</code>.
      */
     public String getDescription() {
         return (String) get(2);
     }
 
     /**
-     * Setter for <code>erp_marcato.role.department_id</code>.
+     * Setter for <code>erp_marcato.Role.level</code>.
      */
-    public void setDepartmentId(Integer value) {
+    public void setLevel(String value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>erp_marcato.role.department_id</code>.
+     * Getter for <code>erp_marcato.Role.level</code>.
      */
-    public Integer getDepartmentId() {
-        return (Integer) get(3);
+    public String getLevel() {
+        return (String) get(3);
     }
 
     // -------------------------------------------------------------------------
@@ -79,7 +79,7 @@ public class RoleRecord extends UpdatableRecordImpl<RoleRecord> {
     // -------------------------------------------------------------------------
 
     @Override
-    public Record1<Long> key() {
+    public Record1<Integer> key() {
         return (Record1) super.key();
     }
 
@@ -97,13 +97,13 @@ public class RoleRecord extends UpdatableRecordImpl<RoleRecord> {
     /**
      * Create a detached, initialised RoleRecord
      */
-    public RoleRecord(Long id, String title, String description, Integer departmentId) {
+    public RoleRecord(Integer id, String title, String description, String level) {
         super(Role.ROLE);
 
         setId(id);
         setTitle(title);
         setDescription(description);
-        setDepartmentId(departmentId);
+        setLevel(level);
         resetTouchedOnNotNull();
     }
 
@@ -117,7 +117,7 @@ public class RoleRecord extends UpdatableRecordImpl<RoleRecord> {
             setId(value.getId());
             setTitle(value.getTitle());
             setDescription(value.getDescription());
-            setDepartmentId(value.getDepartmentId());
+            setLevel(value.getLevel());
             resetTouchedOnNotNull();
         }
     }

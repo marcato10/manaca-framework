@@ -19,58 +19,58 @@ public class SectorRecord extends UpdatableRecordImpl<SectorRecord> {
     private static final long serialVersionUID = 1L;
 
     /**
-     * Setter for <code>erp_marcato.sector.id</code>.
+     * Setter for <code>erp_marcato.Sector.id</code>.
      */
     public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>erp_marcato.sector.id</code>.
+     * Getter for <code>erp_marcato.Sector.id</code>.
      */
     public Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>erp_marcato.sector.title</code>.
+     * Setter for <code>erp_marcato.Sector.title</code>.
      */
     public void setTitle(String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>erp_marcato.sector.title</code>.
+     * Getter for <code>erp_marcato.Sector.title</code>.
      */
     public String getTitle() {
         return (String) get(1);
     }
 
     /**
-     * Setter for <code>erp_marcato.sector.description</code>.
+     * Setter for <code>erp_marcato.Sector.description</code>.
      */
     public void setDescription(String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>erp_marcato.sector.description</code>.
+     * Getter for <code>erp_marcato.Sector.description</code>.
      */
     public String getDescription() {
         return (String) get(2);
     }
 
     /**
-     * Setter for <code>erp_marcato.sector.department_id</code>.
+     * Setter for <code>erp_marcato.Sector.departmentId</code>.
      */
-    public void setDepartmentId(Integer value) {
+    public void setDepartmentid(Integer value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>erp_marcato.sector.department_id</code>.
+     * Getter for <code>erp_marcato.Sector.departmentId</code>.
      */
-    public Integer getDepartmentId() {
+    public Integer getDepartmentid() {
         return (Integer) get(3);
     }
 
@@ -97,13 +97,13 @@ public class SectorRecord extends UpdatableRecordImpl<SectorRecord> {
     /**
      * Create a detached, initialised SectorRecord
      */
-    public SectorRecord(Integer id, String title, String description, Integer departmentId) {
+    public SectorRecord(Integer id, String title, String description, Integer departmentid) {
         super(Sector.SECTOR);
 
         setId(id);
         setTitle(title);
         setDescription(description);
-        setDepartmentId(departmentId);
+        setDepartmentid(departmentid);
         resetTouchedOnNotNull();
     }
 
@@ -117,7 +117,7 @@ public class SectorRecord extends UpdatableRecordImpl<SectorRecord> {
             setId(value.getId());
             setTitle(value.getTitle());
             setDescription(value.getDescription());
-            setDepartmentId(value.getDepartmentId());
+            setDepartmentid(value.getDepartmentid());
             resetTouchedOnNotNull();
         }
     }

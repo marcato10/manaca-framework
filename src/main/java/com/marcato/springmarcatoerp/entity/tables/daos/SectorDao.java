@@ -99,17 +99,17 @@ public class SectorDao extends DAOImpl<SectorRecord, com.marcato.springmarcatoer
     }
 
     /**
-     * Fetch records that have <code>department_id BETWEEN lowerInclusive AND
+     * Fetch records that have <code>departmentId BETWEEN lowerInclusive AND
      * upperInclusive</code>
      */
-    public List<com.marcato.springmarcatoerp.entity.tables.pojos.Sector> fetchRangeOfDepartmentId(Integer lowerInclusive, Integer upperInclusive) {
-        return fetchRange(Sector.SECTOR.DEPARTMENT_ID, lowerInclusive, upperInclusive);
+    public List<com.marcato.springmarcatoerp.entity.tables.pojos.Sector> fetchRangeOfDepartmentid(Integer lowerInclusive, Integer upperInclusive) {
+        return fetchRange(Sector.SECTOR.DEPARTMENTID, lowerInclusive, upperInclusive);
     }
 
     /**
-     * Fetch records that have <code>department_id IN (values)</code>
+     * Fetch records that have <code>departmentId IN (values)</code>
      */
-    public List<com.marcato.springmarcatoerp.entity.tables.pojos.Sector> fetchByDepartmentId(Integer... values) {
-        return fetch(Sector.SECTOR.DEPARTMENT_ID, values);
+    public List<com.marcato.springmarcatoerp.entity.tables.pojos.Sector> fetchByDepartmentid(Integer... values) {
+        return fetch(Sector.SECTOR.DEPARTMENTID, values);
     }
 }

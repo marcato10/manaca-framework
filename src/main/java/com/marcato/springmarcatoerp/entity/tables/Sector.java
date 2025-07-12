@@ -5,6 +5,7 @@ package com.marcato.springmarcatoerp.entity.tables;
 
 
 import com.marcato.springmarcatoerp.entity.ErpMarcato;
+import com.marcato.springmarcatoerp.entity.Indexes;
 import com.marcato.springmarcatoerp.entity.Keys;
 import com.marcato.springmarcatoerp.entity.tables.Department.DepartmentPath;
 import com.marcato.springmarcatoerp.entity.tables.Employees.EmployeesPath;
@@ -17,7 +18,7 @@ import java.util.List;
 import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
-import org.jooq.Identity;
+import org.jooq.Index;
 import org.jooq.InverseForeignKey;
 import org.jooq.Name;
 import org.jooq.Path;
@@ -46,7 +47,7 @@ public class Sector extends TableImpl<SectorRecord> {
     private static final long serialVersionUID = 1L;
 
     /**
-     * The reference instance of <code>erp_marcato.sector</code>
+     * The reference instance of <code>erp_marcato.Sector</code>
      */
     public static final Sector SECTOR = new Sector();
 
@@ -59,24 +60,24 @@ public class Sector extends TableImpl<SectorRecord> {
     }
 
     /**
-     * The column <code>erp_marcato.sector.id</code>.
+     * The column <code>erp_marcato.Sector.id</code>.
      */
-    public final TableField<SectorRecord, Integer> ID = createField(DSL.name("id"), SQLDataType.INTEGER.nullable(false).identity(true), this, "");
+    public final TableField<SectorRecord, Integer> ID = createField(DSL.name("id"), SQLDataType.INTEGER.nullable(false).defaultValue(DSL.field(DSL.raw("nextval('erp_marcato.\"Sector_id_seq\"'::regclass)"), SQLDataType.INTEGER)), this, "");
 
     /**
-     * The column <code>erp_marcato.sector.title</code>.
+     * The column <code>erp_marcato.Sector.title</code>.
      */
-    public final TableField<SectorRecord, String> TITLE = createField(DSL.name("title"), SQLDataType.VARCHAR(50).nullable(false), this, "");
+    public final TableField<SectorRecord, String> TITLE = createField(DSL.name("title"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
-     * The column <code>erp_marcato.sector.description</code>.
+     * The column <code>erp_marcato.Sector.description</code>.
      */
-    public final TableField<SectorRecord, String> DESCRIPTION = createField(DSL.name("description"), SQLDataType.VARCHAR(255), this, "");
+    public final TableField<SectorRecord, String> DESCRIPTION = createField(DSL.name("description"), SQLDataType.CLOB, this, "");
 
     /**
-     * The column <code>erp_marcato.sector.department_id</code>.
+     * The column <code>erp_marcato.Sector.departmentId</code>.
      */
-    public final TableField<SectorRecord, Integer> DEPARTMENT_ID = createField(DSL.name("department_id"), SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<SectorRecord, Integer> DEPARTMENTID = createField(DSL.name("departmentId"), SQLDataType.INTEGER.nullable(false), this, "");
 
     private Sector(Name alias, Table<SectorRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
@@ -87,24 +88,24 @@ public class Sector extends TableImpl<SectorRecord> {
     }
 
     /**
-     * Create an aliased <code>erp_marcato.sector</code> table reference
+     * Create an aliased <code>erp_marcato.Sector</code> table reference
      */
     public Sector(String alias) {
         this(DSL.name(alias), SECTOR);
     }
 
     /**
-     * Create an aliased <code>erp_marcato.sector</code> table reference
+     * Create an aliased <code>erp_marcato.Sector</code> table reference
      */
     public Sector(Name alias) {
         this(alias, SECTOR);
     }
 
     /**
-     * Create a <code>erp_marcato.sector</code> table reference
+     * Create a <code>erp_marcato.Sector</code> table reference
      */
     public Sector() {
-        this(DSL.name("sector"), null);
+        this(DSL.name("Sector"), null);
     }
 
     public <O extends Record> Sector(Table<O> path, ForeignKey<O, SectorRecord> childPath, InverseForeignKey<O, SectorRecord> parentPath) {
@@ -146,8 +147,8 @@ public class Sector extends TableImpl<SectorRecord> {
     }
 
     @Override
-    public Identity<SectorRecord, Integer> getIdentity() {
-        return (Identity<SectorRecord, Integer>) super.getIdentity();
+    public List<Index> getIndexes() {
+        return Arrays.asList(Indexes.SECTOR_DEPARTMENTID_IDX);
     }
 
     @Override
@@ -157,18 +158,18 @@ public class Sector extends TableImpl<SectorRecord> {
 
     @Override
     public List<ForeignKey<SectorRecord, ?>> getReferences() {
-        return Arrays.asList(Keys.SECTOR__FK_SECTOR_DEPARTMENT);
+        return Arrays.asList(Keys.SECTOR__FK_DEPARTMENT);
     }
 
     private transient DepartmentPath _department;
 
     /**
-     * Get the implicit join path to the <code>erp_marcato.department</code>
+     * Get the implicit join path to the <code>erp_marcato.Department</code>
      * table.
      */
     public DepartmentPath department() {
         if (_department == null)
-            _department = new DepartmentPath(this, Keys.SECTOR__FK_SECTOR_DEPARTMENT, null);
+            _department = new DepartmentPath(this, Keys.SECTOR__FK_DEPARTMENT, null);
 
         return _department;
     }
@@ -177,11 +178,11 @@ public class Sector extends TableImpl<SectorRecord> {
 
     /**
      * Get the implicit to-many join path to the
-     * <code>erp_marcato.employees</code> table
+     * <code>erp_marcato.Employees</code> table
      */
     public EmployeesPath employees() {
         if (_employees == null)
-            _employees = new EmployeesPath(this, null, Keys.EMPLOYEES__FK_SECTOR_ID.getInverseKey());
+            _employees = new EmployeesPath(this, null, Keys.EMPLOYEES__FK_SECTOR.getInverseKey());
 
         return _employees;
     }
