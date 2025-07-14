@@ -7,8 +7,10 @@ import com.marcato.springmarcatoerp.DTO.Workspace.WorkspaceViewsDTO;
 import com.marcato.springmarcatoerp.entity.tables.pojos.UsererpPojo;
 import com.marcato.springmarcatoerp.service.WorkspaceService;
 import jakarta.validation.Valid;
+import org.jooq.exception.DataAccessException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -62,26 +64,19 @@ public class UserResource {
 
     @PostMapping
     @PreAuthorize("hasAnyAuthority('User,Moderator,Administrator')")
-    public ResponseEntity<String>createUser(@AuthenticationPrincipal Jwt principal, @Valid @RequestBody UserRegistrationDTO userDTO){
+    public ResponseEntity<?>createUser(@AuthenticationPrincipal Jwt principal, @Valid @RequestBody UserRegistrationDTO userDTO){
+        try{
             UUID userSub = UserDTO.convertOAuthSubToUUID(principal.getSubject());
-            if(userService.getUserByUUID(userSub).get().isPresent()){
-                return new ResponseEntity<>("User already registered.",HttpStatusCode.valueOf(409));
-            }
-            UsererpPojo userPojo = new UsererpPojo();
-            userPojo.setUserUuid(userSub);
-            userPojo.setUsername(userDTO.userName());
-            userPojo.setFullName(userDTO.fullName());
-            userPojo.setCreatedat(OffsetDateTime.now());
-            logger.info("Trying to Insert User");
-
-            if(userService.createUser(userPojo).get() > 0){
-                logger.info("User Inserted With Success");
-
-                return new ResponseEntity<>("User Registration was a success.",HttpStatusCode.valueOf(201));
-            }
-            logger.warn("User was not registered");
-
-            return new ResponseEntity<>("User Registration not happened.",HttpStatusCode.valueOf(500));
+            UserDashboardResponseDTO response = userService.createUser(userSub,userDTO);
+            return ResponseEntity.ok(response);
+        }catch (DuplicateKeyException e){
+            logger.info(e.getMessage());
+            return new ResponseEntity<>(e.getMessage(),HttpStatusCode.valueOf(409));
+        }
+        catch (DataAccessException e){
+            logger.info(e.getMessage());
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
 
     }
 

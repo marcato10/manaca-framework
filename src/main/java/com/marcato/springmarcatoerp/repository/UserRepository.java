@@ -43,6 +43,6 @@ public class UserRepository {
         userErpRecord.setCreatedat(userErpPojo.getCreatedat());
         userErpRecord.setFullName(userErpPojo.getFullName());
         userErpRecord.setUserUuid(userErpPojo.getUserUuid());
-        return CompletableFuture.completedFuture(userErpRecord.store());
+        return CompletableFuture.completedFuture(userErpRecord.insert());
     }
 }
