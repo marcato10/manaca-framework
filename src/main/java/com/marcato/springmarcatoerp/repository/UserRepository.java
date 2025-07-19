@@ -1,8 +1,8 @@
 package com.marcato.springmarcatoerp.repository;
 
-import com.marcato.springmarcatoerp.entity.tables.daos.UsererpDao;
-import com.marcato.springmarcatoerp.entity.tables.pojos.UsererpPojo;
-import com.marcato.springmarcatoerp.entity.tables.records.UsererpRecord;
+import com.marcato.springmarcatoerp.jooq.tables.daos.UsererpDao;
+import com.marcato.springmarcatoerp.jooq.tables.pojos.UsererpPojo;
+import com.marcato.springmarcatoerp.jooq.tables.records.UsererpRecord;
 import org.jooq.DSLContext;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Repository;
@@ -11,7 +11,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
-import static com.marcato.springmarcatoerp.entity.tables.Usererp.USERERP;
+import static com.marcato.springmarcatoerp.jooq.tables.Usererp.USERERP;
 @Repository
 public class UserRepository {
     private final DSLContext create;
@@ -36,6 +36,7 @@ public class UserRepository {
 
     }
     */
+
     @Async("asyncVirtualThreadExecutor")
     public CompletableFuture<Integer> createUser(UsererpPojo userErpPojo){
         UsererpRecord userErpRecord = create.newRecord(USERERP);

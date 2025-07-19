@@ -2,6 +2,8 @@ server:
   port: 8080
 
 spring:
+  jooq:
+    sql-dialect: postgres
   threads:
     virtual:
       enabled: true
@@ -24,6 +26,6 @@ okta:
     audience: https://marcato.erp.com
     groups-claim: https://marcato.erp.com/groups
 springdoc:
-
   api-docs:
     enabled: true
+    path: /api-docs

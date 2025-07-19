@@ -4,9 +4,10 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class Jwt {
-
     public HttpResponse<String> getAccessToken() throws UnirestException {
         return Unirest.post("https://dev-tpjedcct43j1eghk.us.auth0.com/oauth/token")
                 .header("content-type", "application/json")

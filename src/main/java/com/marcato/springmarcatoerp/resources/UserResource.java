@@ -4,7 +4,6 @@ import com.marcato.springmarcatoerp.DTO.User.UserDTO;
 import com.marcato.springmarcatoerp.DTO.User.UserDashboardResponseDTO;
 import com.marcato.springmarcatoerp.DTO.User.UserRegistrationDTO;
 import com.marcato.springmarcatoerp.DTO.Workspace.WorkspaceViewsDTO;
-import com.marcato.springmarcatoerp.entity.tables.pojos.UsererpPojo;
 import com.marcato.springmarcatoerp.service.WorkspaceService;
 import jakarta.validation.Valid;
 import org.jooq.exception.DataAccessException;
@@ -21,8 +20,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.marcato.springmarcatoerp.service.UserService;
 
-import java.time.OffsetDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -41,7 +38,7 @@ public class UserResource {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?>retrieveUserById(@AuthenticationPrincipal Jwt principal,@PathVariable String id) throws ExecutionException, InterruptedException {
+    public ResponseEntity<?>retrieveUserById(@AuthenticationPrincipal Jwt principal,@PathVariable String id) {
         Optional<UserDTO>user = userService.findUserById(Integer.valueOf(id));
         if(user.isPresent()){
             if(!user.get().userUuid().equals(UserDTO.convertOAuthSubToUUID(principal.getId())))
@@ -77,7 +74,6 @@ public class UserResource {
             logger.info(e.getMessage());
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
-
     }
 
 }

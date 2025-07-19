@@ -4,24 +4,19 @@ import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.concurrent.*;
 
 import com.marcato.springmarcatoerp.DTO.User.UserDTO;
 import com.marcato.springmarcatoerp.DTO.User.UserDashboardResponseDTO;
 import com.marcato.springmarcatoerp.DTO.User.UserRegistrationDTO;
 import com.marcato.springmarcatoerp.DTO.Workspace.WorkspaceViewsDTO;
-import com.marcato.springmarcatoerp.entity.tables.daos.UsererpDao;
-import com.marcato.springmarcatoerp.entity.tables.pojos.UsererpPojo;
+import com.marcato.springmarcatoerp.jooq.tables.pojos.UsererpPojo;
 import com.marcato.springmarcatoerp.repository.UserRepository;
 import org.jooq.exception.DataAccessException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DuplicateKeyException;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.HttpClientErrorException;
 
 @Service
 public class UserService {

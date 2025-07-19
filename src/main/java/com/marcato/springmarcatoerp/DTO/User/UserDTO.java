@@ -1,7 +1,7 @@
 package com.marcato.springmarcatoerp.DTO.User;
 
-import com.marcato.springmarcatoerp.entity.tables.pojos.UsererpPojo;
-import com.marcato.springmarcatoerp.entity.tables.records.UsererpRecord;
+import com.marcato.springmarcatoerp.jooq.tables.pojos.UsererpPojo;
+import com.marcato.springmarcatoerp.jooq.tables.records.UsererpRecord;
 
 import java.nio.charset.StandardCharsets;
 import java.time.OffsetDateTime;

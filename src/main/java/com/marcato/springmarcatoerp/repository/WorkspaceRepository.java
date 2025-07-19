@@ -1,9 +1,9 @@
 package com.marcato.springmarcatoerp.repository;
 
 import com.marcato.springmarcatoerp.DTO.Views.ViewDTO;
-import com.marcato.springmarcatoerp.entity.tables.Views;
-import com.marcato.springmarcatoerp.entity.tables.Workspaces;
-import com.marcato.springmarcatoerp.entity.tables.records.WorkspacesRecord;
+import com.marcato.springmarcatoerp.jooq.tables.Views;
+import com.marcato.springmarcatoerp.jooq.tables.Workspaces;
+import com.marcato.springmarcatoerp.jooq.tables.records.WorkspacesRecord;
 import org.jooq.DSLContext;
 import org.jooq.Record2;
 import org.springframework.scheduling.annotation.Async;
