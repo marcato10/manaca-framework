@@ -1,9 +1,9 @@
 package com.marcato.springmarcatoerp.repository;
 
 import com.marcato.springmarcatoerp.DTO.Views.ViewDTO;
-import com.marcato.springmarcatoerp.jooq.tables.Views;
-import com.marcato.springmarcatoerp.jooq.tables.Workspaces;
-import com.marcato.springmarcatoerp.jooq.tables.records.WorkspacesRecord;
+import com.marcato.springmarcatoerp.jooq.tables.View;
+import com.marcato.springmarcatoerp.jooq.tables.Workspace;
+import com.marcato.springmarcatoerp.jooq.tables.records.WorkspaceRecord;
 import org.jooq.DSLContext;
 import org.jooq.Record2;
 import org.springframework.scheduling.annotation.Async;
@@ -24,8 +24,8 @@ public class WorkspaceRepository {
     }
 
     @Async("asyncVirtualThreadExecutor")
-    public CompletableFuture<Optional<WorkspacesRecord>> getWorkspaceByUser(Integer userId){
-        return CompletableFuture.completedFuture(create.selectFrom(Workspaces.WORKSPACES).where(Workspaces.WORKSPACES.USER_ID.eq(userId))
+    public CompletableFuture<Optional<WorkspaceRecord>> getWorkspaceByUser(Integer userId){
+        return CompletableFuture.completedFuture(create.selectFrom(Workspace.WORKSPACE).where(Workspace.WORKSPACE.USER_ERP_ID.eq(userId))
                 .fetchOptional()
         );
     }
@@ -34,18 +34,18 @@ public class WorkspaceRepository {
     public CompletableFuture<Optional<Record2<UUID, ViewDTO[]>>> getWorkspaceAndViews(Integer userId){
         return CompletableFuture.completedFuture(
                 create.select(
-                        Workspaces.WORKSPACES.ID,
+                        Workspace.WORKSPACE.ID,
                                 array(
                                         select(
-                                                row(Views.VIEWS.VIEW_ID,
-                                                Views.VIEWS.LABEL,
-                                                Views.VIEWS.DATA,
-                                                Views.VIEWS.ENTITY_KEY,
-                                                Views.VIEWS.WORKSPACE_ID).mapping(ViewDTO.class,ViewDTO::new)).from(Views.VIEWS).where(Views.VIEWS.WORKSPACE_ID.eq(Workspaces.WORKSPACES.ID))
+                                                row(View.VIEW.VIEW_ID,
+                                                View.VIEW.LABEL,
+                                                View.VIEW.DATA,
+                                                View.VIEW.ENTITY_KEY,
+                                                View.VIEW.WORKSPACE_ID).mapping(ViewDTO.class,ViewDTO::new)).from(View.VIEW).where(View.VIEW.WORKSPACE_ID.eq(Workspace.WORKSPACE.ID))
                                 )
                         ).
-                        from(Workspaces.WORKSPACES)
-                        .where(Workspaces.WORKSPACES.USER_ID.eq(userId)).fetchOptional()
+                        from(Workspace.WORKSPACE)
+                        .where(Workspace.WORKSPACE.USER_ERP_ID.eq(userId)).fetchOptional()
         );
     }
 

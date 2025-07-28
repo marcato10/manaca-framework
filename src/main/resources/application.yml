@@ -10,9 +10,10 @@ spring:
   application:
     name: Marcato ERP
   datasource:
-      url: jdbc:postgresql://localhost:5432/postgres
-      username: postgres
-      password: sukhoisu57
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: sukhoisu57
+    driver-class-name: org.postgresql.Driver
 
 
 logging:

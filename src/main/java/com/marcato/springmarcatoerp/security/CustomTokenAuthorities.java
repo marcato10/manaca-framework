@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 public class CustomTokenAuthorities implements Converter<Jwt, Collection<GrantedAuthority>> {
     private static final String GROUPS_CLAIM_NAME = "https://marcato.erp.com/groups";
     private static final String PERMISSIONS_CLAIM = "permissions";
-
+    private static final String READ_PERMISSIONS_CLAIM = "read_permissions";
 
     @Override
     public Collection<GrantedAuthority> convert(Jwt source) {

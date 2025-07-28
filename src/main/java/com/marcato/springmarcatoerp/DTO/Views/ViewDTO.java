@@ -2,7 +2,6 @@ package com.marcato.springmarcatoerp.DTO.Views;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import org.jooq.JSON;
 import org.jooq.JSONB;
 
 import java.util.UUID;

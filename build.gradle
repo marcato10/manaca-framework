@@ -32,12 +32,15 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     //Spring Docs
     implementation "org.springdoc:springdoc-openapi-starter-common:${springdocVersion}"
-
+    //Spring HATEOAS
+    implementation 'org.springframework.boot:spring-boot-starter-hateoas'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     //Spring Security
     implementation "org.springframework.boot:spring-boot-starter-security"
     // ULID
     implementation group: 'com.github.f4b6a3', name: 'ulid-creator', version: '5.2.3'
+    // JSON Patch
+    implementation group: 'io.github.vishwakarma', name: 'zjsonpatch', version: '0.5.0'
     //Auth 0
     implementation 'com.okta.spring:okta-spring-boot-starter:3.0.5'
     // UNIREST

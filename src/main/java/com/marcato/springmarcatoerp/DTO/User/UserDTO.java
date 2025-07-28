@@ -1,7 +1,8 @@
 package com.marcato.springmarcatoerp.DTO.User;
 
-import com.marcato.springmarcatoerp.jooq.tables.pojos.UsererpPojo;
-import com.marcato.springmarcatoerp.jooq.tables.records.UsererpRecord;
+import com.marcato.springmarcatoerp.jooq.tables.pojos.UserErpPojo;
+import com.marcato.springmarcatoerp.jooq.tables.records.UserErpRecord;
+
 
 import java.nio.charset.StandardCharsets;
 import java.time.OffsetDateTime;
@@ -14,6 +15,7 @@ public record UserDTO(Integer id,
                       String fullName
 ) {
     public static UUID convertOAuthSubToUUID(String sub) {
+
         if (sub == null || sub.trim().isEmpty()) {
             throw new IllegalArgumentException("Auth0 subject string cannot be null or empty.");
         }
@@ -22,10 +24,10 @@ public record UserDTO(Integer id,
         if (pipeIndex != -1 && pipeIndex + 1 < sub.length()) {
             idPart = sub.substring(pipeIndex + 1);
         }
+
         return UUID.nameUUIDFromBytes(idPart.getBytes(StandardCharsets.UTF_8));
     }
-
-    public static UserDTO fromPojo(UsererpPojo pojo) {
+    public static UserDTO fromPojo(UserErpPojo pojo) {
         if (pojo == null) {
             return null;
         }
@@ -33,19 +35,19 @@ public record UserDTO(Integer id,
         return new UserDTO(
                 pojo.getId(),
                 pojo.getUserUuid(),
-                pojo.getCreatedat(), // Note que o getter do POJO é usado aqui
+                pojo.getCreatedAt(),
                 pojo.getUsername(),
                 pojo.getFullName()
         );
     }
-    public static UserDTO fromRecord(UsererpRecord record) {
+    public static UserDTO fromRecord(UserErpRecord record) {
         if (record == null) {
             return null;
         }
         return new UserDTO(
                 record.getId(),
                 record.getUserUuid(),
-                record.getCreatedat(),
+                record.getCreatedAt(),
                 record.getUsername(),
                 record.getFullName()
         );

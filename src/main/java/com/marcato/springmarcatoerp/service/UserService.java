@@ -1,5 +1,6 @@
 package com.marcato.springmarcatoerp.service;
 
+import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -9,7 +10,7 @@ import com.marcato.springmarcatoerp.DTO.User.UserDTO;
 import com.marcato.springmarcatoerp.DTO.User.UserDashboardResponseDTO;
 import com.marcato.springmarcatoerp.DTO.User.UserRegistrationDTO;
 import com.marcato.springmarcatoerp.DTO.Workspace.WorkspaceViewsDTO;
-import com.marcato.springmarcatoerp.jooq.tables.pojos.UsererpPojo;
+import com.marcato.springmarcatoerp.jooq.tables.pojos.UserErpPojo;
 import com.marcato.springmarcatoerp.repository.UserRepository;
 import org.jooq.exception.DataAccessException;
 import org.slf4j.Logger;
@@ -22,6 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private static final long DETERMINISTIC_TIMESTAMP = Instant.EPOCH.toEpochMilli();
+
     Logger logger = LoggerFactory.getLogger(UserService.class);
     private boolean isInsertSucess(int code){
         return code == 1;
@@ -32,13 +35,12 @@ public class UserService {
     }
 
     public Optional<UserDTO>findUserById(Integer id) {
-        Optional<UsererpPojo>userResponse = userRepository.getUserErpById(id).join();
+        Optional<UserErpPojo>userResponse = userRepository.getUserErpById(id).join();
         return userResponse.map(UserDTO::fromPojo);
-
     }
 
     public Optional<UserDTO>findUserByUUID(UUID uuid) {
-        Optional<UsererpPojo>userResponse = userRepository.getUserByUUID(uuid).join();
+        Optional<UserErpPojo>userResponse = userRepository.getUserByUUID(uuid).join();
         return userResponse.map(UserDTO::fromPojo);
     }
 
@@ -47,11 +49,11 @@ public class UserService {
         if(this.findUserByUUID(uuid).isPresent()){
             throw new DuplicateKeyException("User with UUID: "+uuid+ " already exists.");
         }
-        UsererpPojo userPojo = new UsererpPojo();
+        UserErpPojo userPojo = new UserErpPojo();
         userPojo.setUserUuid(uuid);
         userPojo.setUsername(userDTO.userName());
         userPojo.setFullName(userDTO.fullName());
-        userPojo.setCreatedat(OffsetDateTime.now());
+        userPojo.setCreatedAt(OffsetDateTime.now());
         logger.info("Trying to Insert User");
         int code = this.userRepository.createUser(userPojo).join();
         if(!isInsertSucess(code)){
@@ -60,6 +62,7 @@ public class UserService {
         }
         return new UserDashboardResponseDTO(UserDTO.fromPojo(userPojo),new ArrayList<WorkspaceViewsDTO>(0));
     }
+
 
 
 }

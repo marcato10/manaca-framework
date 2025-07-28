@@ -28,10 +28,15 @@ public class UserServiceTest {
     private UserService userService;
 
     @Test
+    @DisplayName("Cadastra um usuario")
+    void createUser_ShouldReturnUserDashboardDTO(){
+
+    }
+
+    @Test
     @DisplayName("Retorna um usuario caso exista")
     void findUserById_ShouldReturnUserDTO_WhenFind(){
         Optional<UserDTO>user = userService.findUserById(1);
         assertTrue(user.isPresent());
-
     }
 }

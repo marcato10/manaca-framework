@@ -23,10 +23,9 @@ import com.marcato.springmarcatoerp.service.UserService;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.concurrent.ExecutionException;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserResource {
     private final UserService userService;
     private final WorkspaceService workspaceService;
@@ -48,15 +47,18 @@ public class UserResource {
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("/status")
+    @GetMapping("/me")
     public ResponseEntity<?> fetchUserUUID(@AuthenticationPrincipal Jwt principal) {
         UUID userSub = UserDTO.convertOAuthSubToUUID(principal.getSubject());
+
         Optional<UserDTO> userRecord = userService.findUserByUUID(userSub);
             if(userRecord.isEmpty()){
                 return ResponseEntity.noContent().build();
             }
             List<WorkspaceViewsDTO> workspaces = workspaceService.findWorkspaceViewsFromUser(userRecord.get().id());
-            return ResponseEntity.ok(new UserDashboardResponseDTO(userRecord.get(),workspaces));
+            UserDashboardResponseDTO response = new UserDashboardResponseDTO(userRecord.get(),workspaces);
+
+            return ResponseEntity.ok(response);
     }
 
     @PostMapping
