@@ -15,7 +15,7 @@ public class JsonPatchHandler {
     public JsonPatchHandler(ObjectMapper objectMapper) {
         this.mapper = objectMapper;
     }
-
+    
     private <T> T convertJsonToPojo(JsonNode json, Class<T> pojo) throws JsonPatchInternalServerError {
         try{
             return this.mapper.convertValue(json,pojo);

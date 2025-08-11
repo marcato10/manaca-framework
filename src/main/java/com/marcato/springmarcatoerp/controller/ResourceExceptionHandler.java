@@ -1,4 +1,4 @@
-package com.marcato.springmarcatoerp.resources;
+package com.marcato.springmarcatoerp.controller;
 
 import com.marcato.springmarcatoerp.DTO.API.ApiError;
 import org.springframework.http.HttpStatus;

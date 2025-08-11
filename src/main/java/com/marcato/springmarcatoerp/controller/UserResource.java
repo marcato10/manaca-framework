@@ -1,9 +1,11 @@
-package com.marcato.springmarcatoerp.resources;
+package com.marcato.springmarcatoerp.controller;
 
+import com.marcato.springmarcatoerp.DTO.API.AvailableDomains;
 import com.marcato.springmarcatoerp.DTO.User.UserDTO;
 import com.marcato.springmarcatoerp.DTO.User.UserDashboardResponseDTO;
 import com.marcato.springmarcatoerp.DTO.User.UserRegistrationDTO;
 import com.marcato.springmarcatoerp.DTO.Workspace.WorkspaceViewsDTO;
+import com.marcato.springmarcatoerp.service.DomainManagementService;
 import com.marcato.springmarcatoerp.service.WorkspaceService;
 import jakarta.validation.Valid;
 import org.jooq.exception.DataAccessException;
@@ -24,16 +26,20 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static com.marcato.springmarcatoerp.security.CustomTokenAuthorities.PERMISSIONS_CLAIM;
+
 @RestController
 @RequestMapping("/users")
 public class UserResource {
     private final UserService userService;
     private final WorkspaceService workspaceService;
+    private final DomainManagementService domainManagementService;
     Logger logger = LoggerFactory.getLogger(UserResource.class);
 
-    public UserResource(UserService puserService, WorkspaceService workspaceService){
+    public UserResource(UserService puserService, WorkspaceService workspaceService, DomainManagementService domainManagementService){
         this.userService = puserService;
         this.workspaceService = workspaceService;
+        this.domainManagementService = domainManagementService;
     }
 
     @GetMapping("/{id}")
@@ -55,9 +61,10 @@ public class UserResource {
             if(userRecord.isEmpty()){
                 return ResponseEntity.noContent().build();
             }
+
             List<WorkspaceViewsDTO> workspaces = workspaceService.findWorkspaceViewsFromUser(userRecord.get().id());
             UserDashboardResponseDTO response = new UserDashboardResponseDTO(userRecord.get(),workspaces);
-
+            System.out.println(response);
             return ResponseEntity.ok(response);
     }
 
@@ -67,7 +74,8 @@ public class UserResource {
         try{
             UUID userSub = UserDTO.convertOAuthSubToUUID(principal.getSubject());
             UserDashboardResponseDTO response = userService.createUser(userSub,userDTO);
-            return ResponseEntity.ok(response);
+            return new ResponseEntity<>(response,HttpStatus.CREATED);
+
         }catch (DuplicateKeyException e){
             logger.info(e.getMessage());
             return new ResponseEntity<>(e.getMessage(),HttpStatusCode.valueOf(409));
@@ -77,5 +85,13 @@ public class UserResource {
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }
+
+    @GetMapping("/editable-entity")
+    public ResponseEntity<AvailableDomains>getEditableDomains(@AuthenticationPrincipal Jwt principal){
+        AvailableDomains userDomains = domainManagementService.getAllowedDomains(principal);
+
+        return ResponseEntity.ok(userDomains);
+    }
+
 
 }

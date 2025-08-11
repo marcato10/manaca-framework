@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
@@ -25,28 +26,19 @@ public class DepartmentRepository {
     public DepartmentRepository(DSLContext create) {
         this.create = create;
     }
-    //We return a DTO, because the database will generate an ID.
     @Async("asyncVirtualThreadExecutor")
     public CompletableFuture<DepartmentRecord> createDepartment(DepartmentPojo pojo){
-        DepartmentRecord depRecord = create.newRecord(Department.DEPARTMENT);
-        Result<DepartmentRecord> record = create.fetch(Department.DEPARTMENT);
+        DepartmentRecord record = create.insertInto(Department.DEPARTMENT).set(new DepartmentRecord(pojo)).returning().fetchOne();
 
-        depRecord.setTitle(pojo.getTitle());
-        depRecord.setDescription(pojo.getDescription());
-        depRecord.insert();
-        depRecord.touched();
-        return CompletableFuture.supplyAsync(()->depRecord);
+        return CompletableFuture.completedFuture(record);
     }
 
     @Async("asyncVirtualThreadExecutor")
-    public CompletableFuture<Optional<DepartmentPojo>>findById(Integer id){
-        return CompletableFuture.supplyAsync(()->
-                new DepartmentDao(this.create.configuration()).fetchOptionalById(id)
-        );
+    public CompletableFuture<Optional<DepartmentRecord>>findById(Integer id){
+        return CompletableFuture.completedFuture(create.selectFrom(Department.DEPARTMENT)
+                .where(Department.DEPARTMENT.ID.eq(id)).fetchOptional());
     }
     //TODO
-
-
     @Async
     public CompletableFuture<List<DepartmentDTO>>getAllDepartments(){
         return CompletableFuture.supplyAsync(()->create.selectFrom(Department.DEPARTMENT).fetchInto(DepartmentDTO.class));
