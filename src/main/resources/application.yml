@@ -4,6 +4,11 @@ server:
     enabled: true
 
 spring:
+  rsocket:
+    server:
+      port: 9090
+      transport: websocket
+      mapping-path: /rsocket
   jooq:
     sql-dialect: postgres
   threads:
@@ -20,11 +25,17 @@ spring:
 
 logging:
   level:
+    io.rsocket: DEBUG
     root: WARN
     org:
       springframework:
-        web: DEBUG
+        web:
+          socket: DEBUG
+        messaging:
+          rsocket: DEBUG
         security: DEBUG
+
+
 
 okta:
   oauth2:

@@ -1,25 +1,25 @@
-package com.marcato.springmarcatoerp.security;
+package com.marcato.springmarcatoerp.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
-import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
 
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {
-    private static final String GROUPS_CLAIM_NAME = "https://marcato.erp.com/groups";
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorize)-> authorize
-                        .requestMatchers("/ws/**").permitAll()
+                        .requestMatchers("/rsocket/**").permitAll()
+                        .requestMatchers("/rsocket").permitAll()
                     .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2->
@@ -28,9 +28,6 @@ public class SecurityConfig {
 
         return http.build();
     }
-
-
-
     @Bean
     public JwtAuthenticationConverter customJwtAuthenticationConverter() {
         JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
@@ -38,4 +35,5 @@ public class SecurityConfig {
 
         return jwtAuthenticationConverter;
     }
+
 }

@@ -14,10 +14,11 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static com.marcato.springmarcatoerp.security.CustomTokenAuthorities.PERMISSIONS_CLAIM;
+import static com.marcato.springmarcatoerp.config.security.CustomTokenAuthorities.PERMISSIONS_CLAIM;
 
 @Service
 public class DomainManagementService {
+
     private final Map<String, iEditableDomain<?,?>>handlerMap;
     public DomainManagementService(List<iEditableDomain<?,?>> domainsList) {
         this.handlerMap = domainsList.stream().collect(Collectors.toMap(iEditableDomain::getKey, Function.identity()));
@@ -35,7 +36,6 @@ public class DomainManagementService {
         if(permissions == null){
             permissions = List.of();
         }
-        System.out.println(permissions);
         return new HashSet<>(permissions);
     }
 
@@ -45,7 +45,7 @@ public class DomainManagementService {
         for(iEditableDomain<?,?>domain : handlerMap.values()){
             if(userPermissions.contains("read:"+domain.getKey())){
                 System.out.println(domain.getDomainFields());
-                domainSet.add(domain.toDomainDefinition(domain.getUserAllowedActions(userPermissions)));
+                domainSet.add(domain.toDomainDefinition(domain.getUserAllowedProcedures(userPermissions)));
             }
         }
 

@@ -26,8 +26,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static com.marcato.springmarcatoerp.security.CustomTokenAuthorities.PERMISSIONS_CLAIM;
-
 @RestController
 @RequestMapping("/users")
 public class UserResource {
@@ -87,9 +85,8 @@ public class UserResource {
     }
 
     @GetMapping("/editable-entity")
-    public ResponseEntity<AvailableDomains>getEditableDomains(@AuthenticationPrincipal Jwt principal){
+    public ResponseEntity<AvailableDomains> getEditableDomains(@AuthenticationPrincipal Jwt principal){
         AvailableDomains userDomains = domainManagementService.getAllowedDomains(principal);
-
         return ResponseEntity.ok(userDomains);
     }
 

@@ -1,5 +1,4 @@
-package com.marcato.springmarcatoerp.security;
-import org.apache.tomcat.util.http.parser.MediaType;
+package com.marcato.springmarcatoerp.config.security;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

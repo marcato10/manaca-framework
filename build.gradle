@@ -30,16 +30,20 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-jooq'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+    //Spring Reactor Test
+    testImplementation 'io.projectreactor:reactor-test:3.7.9'
     //Spring Docs
     implementation "org.springdoc:springdoc-openapi-starter-common:${springdocVersion}"
-    //Spring HATEOAS
-    implementation 'org.springframework.boot:spring-boot-starter-hateoas'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     //Spring WebSocket
     implementation group: 'org.springframework', name: 'spring-websocket', version: '6.2.9'
     implementation group: 'org.springframework', name: 'spring-messaging', version: '6.2.9'
     //Spring Security
     implementation "org.springframework.boot:spring-boot-starter-security"
+    //Spring RSocket
+    implementation 'org.springframework.boot:spring-boot-starter-rsocket'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
     // ULID
     implementation group: 'com.github.f4b6a3', name: 'ulid-creator', version: '5.2.3'
     // JSON Patch
@@ -55,7 +59,6 @@ dependencies {
     implementation "org.jooq:jooq-postgres-extensions:3.20.3"
     //UUID v7
     implementation 'com.fasterxml.uuid:java-uuid-generator:5.1.0'
-
     jooqCodegen 'org.postgresql:postgresql:42.7.5'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'

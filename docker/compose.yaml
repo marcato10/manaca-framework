@@ -9,6 +9,7 @@ services:
     ports:
       - "8088:80"
       - "5432:5432"
+      - "9091:9091"
     networks:
       - frontend
       - backend
