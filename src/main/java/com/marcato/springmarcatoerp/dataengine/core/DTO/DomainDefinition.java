@@ -1,4 +1,4 @@
-package com.marcato.springmarcatoerp.api;
+package com.marcato.springmarcatoerp.dataengine.core.DTO;
 
 import java.util.List;
 import java.util.Set;

@@ -2,8 +2,8 @@ package com.marcato.springmarcatoerp.domain;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.marcato.springmarcatoerp.DTO.Department.DepartmentInputDTO;
+import com.marcato.springmarcatoerp.dataengine.core.iEditableDomain;
 import com.marcato.springmarcatoerp.jooq.tables.Department;
-import com.marcato.springmarcatoerp.jooq.tables.daos.DepartmentDao;
 import com.marcato.springmarcatoerp.jooq.tables.pojos.DepartmentPojo;
 import com.marcato.springmarcatoerp.jooq.tables.records.DepartmentRecord;
 import org.jooq.DSLContext;
@@ -12,13 +12,10 @@ import org.jooq.exception.DataAccessException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.web.socket.TextMessage;
-import org.springframework.web.socket.WebSocketSession;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Stream;
 
 @Component
 public class DepartmentDomain implements iEditableDomain<DepartmentPojo, DepartmentRecord> {

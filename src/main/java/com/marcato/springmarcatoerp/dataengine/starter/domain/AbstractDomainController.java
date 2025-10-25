@@ -1,24 +1,21 @@
-package com.marcato.springmarcatoerp.domain.rpc.service;
+package com.marcato.springmarcatoerp.dataengine.starter.domain;
 
 import com.marcato.springmarcatoerp.DTO.API.UpdatePayload;
-import com.marcato.springmarcatoerp.domain.iEditableDomain;
+import com.marcato.springmarcatoerp.dataengine.core.iEditableDomain;
 import org.jooq.DSLContext;
 import org.jooq.Record;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
 import java.util.List;
-import java.util.Set;
 
-public abstract class AbstractDomainProcedures<P,R extends Record> {
+public abstract class AbstractDomainController<P,R extends Record> {
     private static final org.slf4j.Logger logger =
-            org.slf4j.LoggerFactory.getLogger(AbstractDomainProcedures.class);
+            org.slf4j.LoggerFactory.getLogger(AbstractDomainController.class);
 
     protected abstract iEditableDomain<P,R> getDomain();
     protected abstract DSLContext getDslContext();

@@ -1,10 +1,8 @@
-package com.marcato.springmarcatoerp.domain;
+package com.marcato.springmarcatoerp.dataengine.core;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.marcato.springmarcatoerp.api.DomainDefinition;
-import com.marcato.springmarcatoerp.api.FieldDefinition;
-import com.marcato.springmarcatoerp.domain.rpc.actions.iAction;
-import com.marcato.springmarcatoerp.domain.rpc.procedures.ApplicationProcedure;
+import com.marcato.springmarcatoerp.dataengine.core.DTO.DomainDefinition;
+import com.marcato.springmarcatoerp.dataengine.core.DTO.FieldDefinition;
 import org.jooq.*;
 import org.jooq.Record;
 

@@ -1,9 +1,9 @@
-package com.marcato.springmarcatoerp.service;
+package com.marcato.springmarcatoerp.dataengine.starter;
 
 import com.marcato.springmarcatoerp.DTO.API.AvailableDomains;
-import com.marcato.springmarcatoerp.api.DomainDefinition;
+import com.marcato.springmarcatoerp.dataengine.core.DTO.DomainDefinition;
 import com.marcato.springmarcatoerp.config.exceptions.DomainNotFoundException;
-import com.marcato.springmarcatoerp.domain.iEditableDomain;
+import com.marcato.springmarcatoerp.dataengine.core.iEditableDomain;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +17,10 @@ import java.util.stream.Collectors;
 import static com.marcato.springmarcatoerp.config.security.CustomTokenAuthorities.PERMISSIONS_CLAIM;
 
 @Service
-public class DomainManagementService {
+public class DomainManager {
 
     private final Map<String, iEditableDomain<?,?>>handlerMap;
-    public DomainManagementService(List<iEditableDomain<?,?>> domainsList) {
+    public DomainManager(List<iEditableDomain<?,?>> domainsList) {
         this.handlerMap = domainsList.stream().collect(Collectors.toMap(iEditableDomain::getKey, Function.identity()));
     }
 

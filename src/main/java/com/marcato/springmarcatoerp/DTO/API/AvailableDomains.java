@@ -1,9 +1,7 @@
 package com.marcato.springmarcatoerp.DTO.API;
 
-import com.marcato.springmarcatoerp.api.DomainDefinition;
-import com.marcato.springmarcatoerp.domain.iEditableDomain;
+import com.marcato.springmarcatoerp.dataengine.core.DTO.DomainDefinition;
 
-import java.util.Map;
 import java.util.Set;
 
 public record AvailableDomains(Set<DomainDefinition>domains) {
