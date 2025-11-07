@@ -5,7 +5,7 @@ import com.marcato.springmarcatoerp.DTO.User.UserDTO;
 import com.marcato.springmarcatoerp.DTO.User.UserDashboardResponseDTO;
 import com.marcato.springmarcatoerp.DTO.User.UserRegistrationDTO;
 import com.marcato.springmarcatoerp.DTO.Workspace.WorkspaceViewsDTO;
-import com.marcato.springmarcatoerp.service.DomainManagementService;
+import com.marcato.springmarcatoerp.dataengine.starter.DomainManager;
 import com.marcato.springmarcatoerp.service.WorkspaceService;
 import jakarta.validation.Valid;
 import org.jooq.exception.DataAccessException;
@@ -28,16 +28,16 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/users")
-public class UserResource {
+public class UserController {
     private final UserService userService;
     private final WorkspaceService workspaceService;
-    private final DomainManagementService domainManagementService;
-    Logger logger = LoggerFactory.getLogger(UserResource.class);
+    private final DomainManager domainManager;
+    Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    public UserResource(UserService puserService, WorkspaceService workspaceService, DomainManagementService domainManagementService){
+    public UserController(UserService puserService, WorkspaceService workspaceService, DomainManager domainManager){
         this.userService = puserService;
         this.workspaceService = workspaceService;
-        this.domainManagementService = domainManagementService;
+        this.domainManager = domainManager;
     }
 
     @GetMapping("/{id}")
@@ -86,9 +86,7 @@ public class UserResource {
 
     @GetMapping("/editable-entity")
     public ResponseEntity<AvailableDomains> getEditableDomains(@AuthenticationPrincipal Jwt principal){
-        AvailableDomains userDomains = domainManagementService.getAllowedDomains(principal);
+        AvailableDomains userDomains = domainManager.getAllowedDomains(principal);
         return ResponseEntity.ok(userDomains);
     }
-
-
 }

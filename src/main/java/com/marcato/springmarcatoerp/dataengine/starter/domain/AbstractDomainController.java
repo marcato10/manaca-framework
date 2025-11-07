@@ -1,7 +1,7 @@
 package com.marcato.springmarcatoerp.dataengine.starter.domain;
 
 import com.marcato.springmarcatoerp.DTO.API.UpdatePayload;
-import com.marcato.springmarcatoerp.dataengine.core.iEditableDomain;
+import com.marcato.springmarcatoerp.dataengine.core.BusinessDomain;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -13,11 +13,11 @@ import reactor.core.scheduler.Schedulers;
 
 import java.util.List;
 
-public abstract class AbstractDomainController<P,R extends Record> {
+public abstract class AbstractDomainController<P> {
     private static final org.slf4j.Logger logger =
             org.slf4j.LoggerFactory.getLogger(AbstractDomainController.class);
 
-    protected abstract iEditableDomain<P,R> getDomain();
+    protected abstract BusinessDomain<P> getDomain();
     protected abstract DSLContext getDslContext();
 
     @MessageMapping(".ping")
@@ -28,7 +28,7 @@ public abstract class AbstractDomainController<P,R extends Record> {
 
     @MessageMapping(".create")
     public Mono<P> create(@Payload P pojo) {
-        return Mono.fromCallable(() -> getDomain().create(pojo))
+        return Mono.fromCallable(() -> getDomain().getDomainProcedures().create(pojo))
                 .subscribeOn(Schedulers.boundedElastic())
                 .doOnSuccess(result -> logger.debug("✨ Created: {}", result))
                 .doOnError(error -> logger.error("❌ Error creating: {}", error.getMessage()));
@@ -36,7 +36,7 @@ public abstract class AbstractDomainController<P,R extends Record> {
 
     @MessageMapping(".read")
     public Mono<P> read(@DestinationVariable String id) {
-        return Mono.fromCallable(() -> getDomain().read(id))
+        return Mono.fromCallable(() -> getDomain().getDomainProcedures().read(id))
                 .subscribeOn(Schedulers.boundedElastic())
                 .doOnSuccess(result -> logger.debug("📖 Read: {}", id))
                 .doOnError(error -> logger.error("❌ Error reading {}: {}", id, error.getMessage()));
@@ -44,7 +44,7 @@ public abstract class AbstractDomainController<P,R extends Record> {
 
     @MessageMapping(".update")
     public Mono<P> update(@Payload UpdatePayload<P> payload) {
-        return Mono.fromCallable(() -> getDomain().update(payload.id(), payload.data()))
+        return Mono.fromCallable(() -> getDomain().getDomainProcedures().update(payload.id(), payload.data()))
                 .subscribeOn(Schedulers.boundedElastic())
                 .doOnSuccess(result -> logger.debug("📝 Updated: {}", payload.id()))
                 .doOnError(error -> logger.error("❌ Error updating {}: {}", payload.id(), error.getMessage()));
@@ -52,7 +52,7 @@ public abstract class AbstractDomainController<P,R extends Record> {
 
     @MessageMapping(".delete")
     public Mono<String> delete(@Payload String id) {
-        return Mono.fromCallable(() -> getDomain().delete(id))
+        return Mono.fromCallable(() -> getDomain().getDomainProcedures().delete(id))
                 .subscribeOn(Schedulers.boundedElastic())
                 .doOnSuccess(result -> logger.debug("🗑️ Deleted: {}", id))
                 .doOnError(error -> logger.error("❌ Error deleting {}: {}", id, error.getMessage()));
@@ -62,7 +62,7 @@ public abstract class AbstractDomainController<P,R extends Record> {
     public Flux<P> list() {
         logger.debug("Receiving request");
         return Flux.defer(()->{
-            List<P> items = getDomain().getList();
+            List<P> items = getDomain().getDomainProcedures().getList();
             return Flux.fromIterable(items);
         }).subscribeOn(Schedulers.boundedElastic())
                 .doOnComplete(() -> logger.debug("📋 Listed all items"))

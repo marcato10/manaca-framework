@@ -2,7 +2,7 @@ package com.marcato.springmarcatoerp.domain;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.marcato.springmarcatoerp.DTO.Department.DepartmentInputDTO;
-import com.marcato.springmarcatoerp.dataengine.core.iEditableDomain;
+import com.marcato.springmarcatoerp.dataengine.core.BusinessDomain;
 import com.marcato.springmarcatoerp.jooq.tables.Department;
 import com.marcato.springmarcatoerp.jooq.tables.pojos.DepartmentPojo;
 import com.marcato.springmarcatoerp.jooq.tables.records.DepartmentRecord;
@@ -16,9 +16,9 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-
+/*
 @Component
-public class DepartmentDomain implements iEditableDomain<DepartmentPojo, DepartmentRecord> {
+public class DepartmentDomain implements BusinessDomain<DepartmentPojo> {
     private final DSLContext context;
     public static final Logger logger = LoggerFactory.getLogger(DepartmentDomain.class);
     public DepartmentDomain(DSLContext context) {
@@ -87,3 +87,4 @@ public class DepartmentDomain implements iEditableDomain<DepartmentPojo, Departm
         return futureDepLists.join();
     }
 }
+*/
