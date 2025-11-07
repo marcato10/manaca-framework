@@ -1,6 +1,8 @@
 package com.marcato.springmarcatoerp.dataengine.core.security;
 
 import com.marcato.springmarcatoerp.dataengine.core.BusinessDomain;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.jwt.Jwt;
 
 import java.util.Set;
 
@@ -50,7 +52,7 @@ public interface PermissionManager {
      * @return A Set containing the permissions of the roles.
      */
     Set<String> getRolePermissions(String roleName);
-
+    Set<String> getAuthorizedPermissions(Jwt principal);
     /**
      * Assigns a role to a user.
      * @param userId The user's ID in the provider (e.g., "auth0|123").

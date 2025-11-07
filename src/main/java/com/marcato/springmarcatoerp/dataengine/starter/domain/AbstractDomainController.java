@@ -18,7 +18,6 @@ public abstract class AbstractDomainController<P> {
             org.slf4j.LoggerFactory.getLogger(AbstractDomainController.class);
 
     protected abstract BusinessDomain<P> getDomain();
-    protected abstract DSLContext getDslContext();
 
     @MessageMapping(".ping")
     public Mono<String> ping() {

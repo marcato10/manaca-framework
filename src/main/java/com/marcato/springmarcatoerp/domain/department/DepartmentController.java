@@ -1,12 +1,9 @@
-package com.marcato.springmarcatoerp.domain;
+package com.marcato.springmarcatoerp.domain.department;
 
 import com.marcato.springmarcatoerp.dataengine.core.BusinessDomain;
 import com.marcato.springmarcatoerp.dataengine.starter.domain.AbstractDomainController;
-import com.marcato.springmarcatoerp.jooq.tables.Department;
 import com.marcato.springmarcatoerp.jooq.tables.pojos.DepartmentPojo;
-import com.marcato.springmarcatoerp.jooq.tables.records.DepartmentRecord;
 import org.jooq.DSLContext;
-import org.jooq.Table;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -15,10 +12,9 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 @MessageMapping("departments")
-public class DepartmentController extends AbstractDomainController<DepartmentPojo, DepartmentRecord> {
+public class DepartmentController extends AbstractDomainController<DepartmentPojo> {
     private static final Logger logger = LoggerFactory.getLogger(DepartmentController.class);
     private final DepartmentDomain departmentDomain;
-    private final Table<DepartmentRecord> TABLE = Department.DEPARTMENT;
     private final DSLContext context;
     public DepartmentController(DepartmentDomain departmentDomain, DSLContext context) {
         this.departmentDomain = departmentDomain;
@@ -30,7 +26,6 @@ public class DepartmentController extends AbstractDomainController<DepartmentPoj
         return this.departmentDomain;
     }
 
-    @Override
     protected DSLContext getDslContext() {
         return this.context;
     }
